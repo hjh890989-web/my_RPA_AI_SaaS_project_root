@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제조 AI 자동화 사업 전략 발표</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --primary:#1a1a2e;--accent:#e94560;--blue:#0f3460;--gold:#f5a623;
+  --teal:#16213e;--light:#eef2ff;--card:#1e2d4a;--text:#e8eaf6;
+}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--primary);color:var(--text);overflow:hidden;height:100vh;}
+.slides-wrap{position:relative;width:100%;height:100vh;}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:40px 60px;background:var(--primary);opacity:0;transition:opacity .4s;}
+.slide.active{display:flex;opacity:1;}
+/* Nav */
+.nav{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:100;align-items:center;}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s;}
+.dot.active{background:var(--accent);transform:scale(1.4);}
+.arrow{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 20px;border-radius:20px;cursor:pointer;font-size:14px;transition:all .3s;backdrop-filter:blur(10px);}
+.arrow:hover{background:var(--accent);border-color:var(--accent);}
+.slide-num{position:fixed;top:20px;right:30px;font-size:12px;opacity:.4;letter-spacing:2px;}
+/* Common */
+.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+h1.slide-title{font-size:36px;font-weight:900;line-height:1.2;margin-bottom:6px;}
+.subtitle{font-size:14px;opacity:.5;letter-spacing:2px;text-transform:uppercase;margin-bottom:30px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;flex:1;}
+.card{background:var(--card);border-radius:16px;padding:24px;border:1px solid rgba(255,255,255,.06);}
+.card h3{font-size:14px;font-weight:700;margin-bottom:12px;color:var(--gold);}
+.card p,.card li{font-size:13px;line-height:1.7;opacity:.8;}
+.card ul{list-style:none;padding:0;}
+.card ul li::before{content:"▸ ";color:var(--accent);}
+.tag{display:inline-block;background:rgba(233,69,96,.15);border:1px solid rgba(233,69,96,.4);color:var(--accent);padding:2px 10px;border-radius:10px;font-size:11px;margin:3px 2px;}
+.tag.blue{background:rgba(15,52,96,.4);border-color:rgba(15,52,96,.8);color:#7eb8f7;}
+.tag.green{background:rgba(0,200,100,.1);border-color:rgba(0,200,100,.3);color:#4cdd7a;}
+/* S1 */
+.s1-header{background:linear-gradient(135deg,var(--blue),var(--accent));border-radius:20px;padding:28px 36px;margin-bottom:24px;position:relative;overflow:hidden;}
+.s1-header::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.05);}
+.s1-header h2{font-size:28px;font-weight:900;}
+.s1-header p{font-size:13px;opacity:.7;margin-top:6px;}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.kpi{background:var(--card);border-radius:14px;padding:18px;text-align:center;border:1px solid rgba(255,255,255,.06);}
+.kpi .num{font-size:26px;font-weight:900;color:var(--gold);}
+.kpi .lbl{font-size:11px;opacity:.6;margin-top:4px;}
+/* S2 - matrix */
+.matrix-wrap{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;}
+.quad{border-radius:16px;padding:20px;position:relative;}
+.quad h3{font-size:13px;font-weight:700;margin-bottom:12px;}
+.persona-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border-radius:20px;padding:5px 12px;margin:3px;font-size:12px;}
+.persona-chip .score{font-weight:700;color:var(--gold);}
+.q1{background:linear-gradient(135deg,rgba(233,69,96,.15),rgba(233,69,96,.05));border:1px solid rgba(233,69,96,.3);}
+.q2{background:linear-gradient(135deg,rgba(245,166,35,.1),rgba(245,166,35,.03));border:1px solid rgba(245,166,35,.3);}
+.q3{background:linear-gradient(135deg,rgba(100,150,255,.1),rgba(100,150,255,.03));border:1px solid rgba(100,150,255,.3);}
+.q4{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);}
+.axis-x{position:absolute;bottom:-24px;left:0;right:0;text-align:center;font-size:11px;opacity:.4;padding:4px;}
+.matrix-outer{position:relative;flex:1;}
+/* S3 */
+.jtbd-card{background:linear-gradient(135deg,var(--blue),var(--teal));border-radius:20px;padding:28px;margin-bottom:20px;border-left:4px solid var(--accent);}
+.jtbd-card h2{font-size:16px;font-weight:900;line-height:1.5;opacity:.9;}
+.persona-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;flex:1;}
+.p-card{background:var(--card);border-radius:16px;padding:20px;border:1px solid rgba(255,255,255,.06);}
+.p-card .name{font-size:15px;font-weight:700;margin-bottom:6px;}
+.p-card .pain{font-size:12px;color:#ff8fa3;margin-bottom:8px;font-weight:500;}
+.p-card .outcome{font-size:12px;color:#4cdd7a;margin-bottom:10px;}
+.p-card .trigger{font-size:11px;color:var(--gold);opacity:.8;}
+/* S4 */
+.flow-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:20px;}
+.flow-box{background:var(--card);padding:20px;text-align:center;position:relative;}
+.flow-box:first-child{border-radius:16px 0 0 16px;}
+.flow-box:last-child{border-radius:0 16px 16px 0;}
+.flow-box .icon{font-size:28px;margin-bottom:8px;}
+.flow-box h4{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;}
+.flow-box p{font-size:12px;opacity:.7;line-height:1.6;}
+.arrow-mid{position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:20px;z-index:2;}
+.diff-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;flex:1;}
+.diff-card{background:var(--card);border-radius:16px;padding:20px;border-top:3px solid var(--accent);}
+.diff-card h4{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.diff-card p{font-size:12px;opacity:.75;line-height:1.6;}
+/* S5 */
+.pricing-hero{background:linear-gradient(135deg,#0f3460,#16213e);border-radius:20px;padding:24px 30px;margin-bottom:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+.price-item{text-align:center;}
+.price-item .amount{font-size:30px;font-weight:900;color:var(--gold);}
+.price-item .unit{font-size:12px;opacity:.5;margin-top:2px;}
+.price-item .desc{font-size:12px;opacity:.7;margin-top:6px;line-height:1.5;}
+.growth-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;flex:1;}
+.growth-card{background:var(--card);border-radius:16px;padding:20px;}
+.growth-card .phase{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--accent);margin-bottom:8px;}
+.growth-card h4{font-size:14px;font-weight:700;margin-bottom:10px;}
+.growth-card p{font-size:12px;opacity:.7;line-height:1.6;}
+/* S6 */
+.feat-table{width:100%;border-collapse:collapse;flex:1;font-size:13px;}
+.feat-table th{background:rgba(233,69,96,.15);padding:12px 16px;text-align:left;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--accent);font-weight:700;border-bottom:1px solid rgba(255,255,255,.1);}
+.feat-table td{padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle;}
+.feat-table tr:hover td{background:rgba(255,255,255,.03);}
+.prio{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;}
+.prio.p1{background:#e94560;}
+.prio.p2{background:#f5a623;}
+.prio.p3{background:#4cdd7a;}
+.prio.px{background:#555;}
+.bar{height:6px;border-radius:3px;background:rgba(255,255,255,.1);position:relative;min-width:60px;}
+.bar-fill{height:100%;border-radius:3px;position:absolute;left:0;top:0;}
+.mvp-yes{color:#4cdd7a;font-weight:700;}
+.mvp-no{color:#555;}
+</style>
+</head>
+<body>
+<div class="slides-wrap">
+
+<!-- ===== SLIDE 1 ===== -->
+<div class="slide active" id="s1">
+  <div class="badge" style="background:rgba(233,69,96,.2);color:var(--accent);margin-bottom:16px;">WEEK 2 REVIEW</div>
+  <h1 class="slide-title">지난주 주요 인사이트 요약</h1>
+  <p class="subtitle">산업분석 · 문제정의 · 고객세그먼트 · 핵심 Pain</p>
+  <div class="s1-header">
+    <h2>🏭 국내 중소/중견 제조업 AI 자동화 시장</h2>
+    <p>스스로 작동하지 않는 스마트공장 — 16.3만 기업 중 AI 도입률 단 0.1%</p>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi"><div class="num">16.3만</div><div class="lbl">국내 중소/중견 제조사</div></div>
+    <div class="kpi"><div class="num">0.1%</div><div class="lbl">AI 실제 도입률</div></div>
+    <div class="kpi"><div class="num">4,230억</div><div class="lbl">2026 정부 AX 예산</div></div>
+    <div class="kpi"><div class="num">24,000</div><div class="lbl">SEG-C 핵심 타겟 기업</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>🔴 핵심 Pain Point (Porter 5 Forces + 문제정의 종합)</h3>
+      <ul>
+        <li>공장장·스케줄러 <strong>1인 퇴사 시 공장 마비</strong> (SPOF 공포)</li>
+        <li>현장 작업자 <strong>키오스크 입력 전면 거부</strong> → 수백만짜리 MES 먼지만</li>
+        <li>원청사 감사 시 <strong>엑셀 20개 밤새 취합</strong> → 데이터 조작 의심</li>
+        <li>정부 바우처 신청? <strong>서류·행정이 더 두렵다</strong> (CFO)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎯 핵심 고객 세그먼트 (SEG-C 징검다리 전략)</h3>
+      <ul>
+        <li><strong>SEG-C:</strong> 스마트공장 기초는 갖췄으나 AI로 못 넘어가는 24,000개사</li>
+        <li>매출 100억~500억 / 종업원 50~300명의 제조 부품사</li>
+        <li>더존/영림원 ERP 보유 → 데이터는 있으나 <strong>활용 인프라 부재</strong></li>
+        <li>글로벌 원청사 납품 이력 추적 요구 → <strong>생존 규제 압박 증가</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⚠️ AX 도입 실패 원인 (11번 분석 기반)</h3>
+      <ul>
+        <li>현장 작업자 행동 변화 강제 → 수용 거부</li>
+        <li>ERP/MES 사일로 → 연동 실패로 PoC 중단</li>
+        <li>ROI 불투명 → CFO 예산 반려 (3~6개월 지연)</li>
+        <li>CISO 보안 우려 → 클라우드 전면 차단</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ 전략적 결론: 우리의 포지셔닝</h3>
+      <ul>
+        <li>'기술 혁신' 아닌 <strong>'현장 생존 인프라'</strong>로 포지셔닝</li>
+        <li>입력 Zero + 감사 방어 + 바우처 대행 = 3대 핵심 가치</li>
+        <li>경쟁우위: ERP 기존 벤더는 현장 행정 대행 안 함</li>
+        <li>진입 전략: <strong>바우처 대행사</strong>로 문을 열고 AI로 확장</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 2 ===== -->
+<div class="slide" id="s2">
+  <div class="badge" style="background:rgba(245,166,35,.2);color:var(--gold);margin-bottom:16px;">OPPORTUNITY ANALYSIS</div>
+  <h1 class="slide-title">AOS – DOS Combined Matrix</h1>
+  <p class="subtitle">혁신·개선·유지·보류 영역 시각화 및 자원배분 근거</p>
+  <div style="display:flex;gap:16px;align-items:center;margin-bottom:16px;font-size:12px;opacity:.6;">
+    <span>X축: AOS (개인 Pain 미충족 강도, 기준선 2.5)</span>
+    <span>|</span>
+    <span>Y축: DOS (시장규모 가중 기회점수, 기준선 2.0)</span>
+  </div>
+  <div class="matrix-wrap">
+    <div class="quad q1">
+      <h3>🔴 Q1 STAR — 지금 당장 전력 투자 (AOS↑ × DOS↑)</h3>
+      <div><span class="persona-chip">🏆 COO 한성우 <span class="score">AOS4.0/DOS3.6</span></span></div>
+      <div><span class="persona-chip">🏆 공장장 소장님 <span class="score">AOS4.0/DOS3.2</span></span></div>
+      <div><span class="persona-chip">🥈 구매 클레어 리 <span class="score">AOS4.0/DOS2.8</span></span></div>
+      <div><span class="persona-chip">🥈 CEO 강승현 <span class="score">AOS3.0/DOS2.7</span></span></div>
+      <div><span class="persona-chip">🥈 CIO 정미경 <span class="score">AOS3.2/DOS2.4</span></span></div>
+      <div><span class="persona-chip">🥈 품질이사 차품질 <span class="score">AOS3.0/DOS2.4</span></span></div>
+      <div style="margin-top:10px;font-size:11px;color:var(--accent);opacity:.8;">→ 개발 리소스 60% 집중</div>
+    </div>
+    <div class="quad q2">
+      <h3>🟡 Q2 LEVERAGE — 선택적 집중 (AOS↑ × DOS↓)</h3>
+      <div><span class="persona-chip">TF장 박준호 <span class="score">AOS3.0/DOS1.8</span></span></div>
+      <div style="margin-top:12px;font-size:12px;opacity:.7;line-height:1.6;">타겟 모집단은 좁으나 PoC 성공 시 그룹사 전체 계약으로<br><strong>10배 레버리지</strong> 가능한 니치 전략 영역</div>
+      <div style="margin-top:10px;font-size:11px;color:var(--gold);opacity:.8;">→ GTM/영업 15% 투입</div>
+    </div>
+    <div class="quad q3">
+      <h3>🔵 Q3 GATE — 직접 설득 금지, 우회 설계 (AOS↓ × DOS↑)</h3>
+      <div><span class="persona-chip">CFO 이재무 <span class="score">AOS1.6/DOS0.8</span></span></div>
+      <div><span class="persona-chip">CISO 최보안 <span class="score">AOS1.0/DOS0.8</span></span></div>
+      <div style="margin-top:12px;font-size:12px;opacity:.7;line-height:1.6;">❗ 혁신 수요자가 아닌 <strong>계약 최종 거부권자</strong><br>Q1 기회 실현의 필수 통과 조건 → 인프라/정책 20% 투입</div>
+    </div>
+    <div class="quad q4">
+      <h3>⚪ Q4 MAINTAIN — 에너지 최소화, 관계만 유지 (AOS↓ × DOS↓)</h3>
+      <div><span class="persona-chip">창업주 노태풍 <span class="score">AOS2.4/DOS1.0</span></span></div>
+      <div><span class="persona-chip">고문 김가이드 <span class="score">AOS1.2/DOS0.0</span></span></div>
+      <div><span class="persona-chip">안주형 한평안 <span class="score">AOS0.0/DOS-0.3</span></span></div>
+      <div style="margin-top:10px;font-size:11px;opacity:.6;">→ 채널/관계 5% (파트너 소개 프로그램)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 3 ===== -->
+<div class="slide" id="s3">
+  <div class="badge" style="background:rgba(76,221,122,.15);color:#4cdd7a;margin-bottom:16px;">JTBD FRAMEWORK</div>
+  <h1 class="slide-title">JTBD 요약 카드 & 타겟 고객군</h1>
+  <p class="subtitle">Job-to-be-Done 선언문 · Pain–Outcome 흐름 · 대표 페르소나</p>
+  <div class="jtbd-card">
+    <div style="font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:10px;">CORE JOB-TO-BE-DONE STATEMENT</div>
+    <h2>"나는 [특정 직원의 퇴사·부재]라는 상황에 처했을 때, [수기 입력 없이 원청사 감사를 통과하는 데이터]를 확보함으로써 [납품 중단 및 벤더 탈락의 위기]를 방어하고 싶다."</h2>
+  </div>
+  <div class="persona-row">
+    <div class="p-card">
+      <div style="font-size:10px;color:var(--accent);letter-spacing:1px;margin-bottom:6px;">🥇 PRIORITY 1 — CORE</div>
+      <div class="name">한성우 COO / 소장님 공장장</div>
+      <div class="pain">😰 Pain: 스케줄러 1인 퇴사 시 공장 마비 + 키오스크 입력 전면 거부</div>
+      <div class="outcome">✅ Outcome: 수기 입력 0% + 공정 계획 자동화 (AOS 4.0)</div>
+      <div class="trigger">🔑 트리거: "그 과장 없으면 그날 공장 그냥 멈춰요"</div>
+    </div>
+    <div class="p-card">
+      <div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:6px;">🥈 PRIORITY 2 — ADJACENT</div>
+      <div class="name">클레어 리 구매본부장</div>
+      <div class="pain">😰 Pain: 삼성 감사팀 기습 시 엑셀 20개 밤새 취합 → 조작 의심</div>
+      <div class="outcome">✅ Outcome: 원클릭 Traceability PDF (AOS 4.0 / DOS 2.8)</div>
+      <div class="trigger">🔑 트리거: "버튼 하나 누르면 리포트가 딱 나오는 거, 그게 제 꿈"</div>
+    </div>
+    <div class="p-card">
+      <div style="font-size:10px;color:#7eb8f7;letter-spacing:1px;margin-bottom:6px;">🔒 GATE — CFO + CISO</div>
+      <div class="name">이재무 CFO / 최보안 CISO</div>
+      <div class="pain">😰 Pain: ROI 불투명한 억대 예산 결재 공포 / 클라우드 데이터 유출 공포</div>
+      <div class="outcome">✅ Outcome: 자부담 80% 감축 + 데이터 외부 유출 0% (On-premise)</div>
+      <div class="trigger">🔑 전략: 바우처 설계서 선제 제출 + On-premise 아키텍처 사전 명시</div>
+    </div>
+  </div>
+  <div style="margin-top:16px;background:var(--card);border-radius:14px;padding:16px 24px;display:flex;gap:30px;align-items:center;border:1px solid rgba(255,255,255,.06);">
+    <div style="font-size:12px;opacity:.6;white-space:nowrap;">JTBD 검증 결과 (14인 인터뷰)</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <span class="tag green">✅ H-A 스케줄러 탈피 — 완전 검증</span>
+      <span class="tag green">✅ H-B 무입력 로깅 — 완전 검증</span>
+      <span class="tag green">✅ H-C 데이터 경영 — 완전 검증</span>
+      <span class="tag green">✅ H-E 바우처 ROI — 완전 검증</span>
+      <span class="tag">⚠️ H-D ERP 연동 — 조건부</span>
+      <span class="tag">⚠️ H-F On-premise — 조건부</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 4 ===== -->
+<div class="slide" id="s4">
+  <div class="badge" style="background:rgba(233,69,96,.2);color:var(--accent);margin-bottom:16px;">VALUE PROPOSITION</div>
+  <h1 class="slide-title">Value Proposition Sheet</h1>
+  <p class="subtitle">문제 – 해결 – 효과 흐름 및 차별 가치 제안</p>
+  <div class="flow-row" style="margin-bottom:18px;">
+    <div class="flow-box">
+      <div class="icon">😰</div>
+      <h4>Problem</h4>
+      <p>사람의 머릿속에 갇힌 공정 + 키오스크 거부 + 밤샘 감사 서류 + 예산 결재 공포</p>
+      <div class="arrow-mid">›</div>
+    </div>
+    <div class="flow-box" style="border-left:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08);">
+      <div class="icon">⚡</div>
+      <h4>Solution</h4>
+      <p>패시브 Vision/음성 로깅 + ERP 브릿지 + 원클릭 Traceability 봇 + 바우처 대행</p>
+      <div class="arrow-mid">›</div>
+    </div>
+    <div class="flow-box">
+      <div class="icon">✅</div>
+      <h4>Outcome</h4>
+      <p>수기 입력 <strong>0%</strong> · 감사 리포트 <strong>10분</strong> · 자부담 <strong>80%↓</strong> · 납품 탈락 <strong>0</strong></p>
+    </div>
+  </div>
+  <div style="background:linear-gradient(135deg,rgba(233,69,96,.1),rgba(15,52,96,.3));border-radius:16px;padding:20px 28px;margin-bottom:18px;border:1px solid rgba(233,69,96,.2);">
+    <div style="font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:8px;">CORE VALUE PROPOSITION</div>
+    <p style="font-size:16px;font-weight:700;line-height:1.5;">"단 한 번의 키보드 입력 없이, 당장의 납품 규제를 통과시켜주는 <span style="color:var(--gold);">정부 지원 AI 솔루션</span>"</p>
+  </div>
+  <div class="diff-row">
+    <div class="diff-card">
+      <h4>🎯 차별점 1: Zero-Touch UX</h4>
+      <p>음성·카메라 기반 패시브 데이터 수집. 키오스크·키보드 완전 배제. 50대 반장도 저항 없이 사용.</p>
+      <div style="margin-top:10px;"><span class="tag">기존 MES 대비 차별</span></div>
+    </div>
+    <div class="diff-card">
+      <h4>🛡️ 차별점 2: 규제 방어막</h4>
+      <p>'효율 10%↑'가 아닌 '원청사 탈락 방지'로 결재 시급성 창출. 삼성·현대차 표준 포맷 자동 대응.</p>
+      <div style="margin-top:10px;"><span class="tag">글로벌 벤더 대비 차별</span></div>
+    </div>
+    <div class="diff-card">
+      <h4>💰 차별점 3: 행정 턴키 대행</h4>
+      <p>바우처 사업 신청부터 사후관리까지 100% 밀착 대행. 어떤 IT 벤더도 해주지 않는 서비스.</p>
+      <div style="margin-top:10px;"><span class="tag">기존 SI사 대비 차별</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 5 ===== -->
+<div class="slide" id="s5">
+  <div class="badge" style="background:rgba(76,221,122,.15);color:#4cdd7a;margin-bottom:16px;">REVENUE MODEL</div>
+  <h1 class="slide-title">수익 구조 및 성장 전략</h1>
+  <p class="subtitle">가격 정책 · 과금 모델 · 리텐션 · 장기 성장 플랜</p>
+  <div class="pricing-hero">
+    <div class="price-item">
+      <div style="font-size:11px;color:var(--accent);letter-spacing:1px;margin-bottom:10px;">① 초기 구축비 (One-time)</div>
+      <div class="amount">~5,000만</div>
+      <div class="unit">원 (바우처 80~90% 청구)</div>
+      <div class="desc">고객 실 자부담 <strong style="color:var(--gold);">500~1,000만 원</strong>으로 낮춰 결재 문턱 소멸</div>
+    </div>
+    <div class="price-item" style="border-left:1px solid rgba(255,255,255,.1);border-right:1px solid rgba(255,255,255,.1);">
+      <div style="font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:10px;">② 월 구독료 (MRR)</div>
+      <div class="amount">150~200만</div>
+      <div class="unit">원/월 (전액 자사 수익)</div>
+      <div class="desc">인프라·AI 토큰·원청사 포맷 업데이트 포함. <strong style="color:#4cdd7a;">연 1,800~2,400만 원</strong> ARR</div>
+    </div>
+    <div class="price-item">
+      <div style="font-size:11px;color:#7eb8f7;letter-spacing:1px;margin-bottom:10px;">③ ROI 근거 (고객 관점)</div>
+      <div class="amount" style="font-size:22px;">숙련자 1인<br>채용비 회피</div>
+      <div class="unit">연 5,000만 원 vs 월 150만</div>
+      <div class="desc">월 구독료 = <strong style="color:var(--gold);">경영 리스크 보험금</strong>으로 인식 전환</div>
+    </div>
+  </div>
+  <div class="growth-row">
+    <div class="growth-card">
+      <div class="phase">Phase 1 · 0~6개월</div>
+      <h4>🚀 Land (교두보 확보)</h4>
+      <p>SEG-C 기업 5~10개사 바우처 연계 PoC 성사. 수기 입력 0% 실증. <strong>레퍼런스 1건 확보</strong>가 최우선 목표.</p>
+    </div>
+    <div class="growth-card">
+      <div class="phase">Phase 2 · 6~18개월</div>
+      <h4>📈 Expand (확장)</h4>
+      <p>1호 고객 성공 사례 기반 유사 원청사 협력사 타겟. AI 스케줄러(P2) 추가로 <strong>월 구독료 Up-sell</strong>.</p>
+    </div>
+    <div class="growth-card">
+      <div class="phase">Phase 3 · 18개월+</div>
+      <h4>🔒 Lock-in (고객 고착화)</h4>
+      <p>'무입력 편의성' 한 번 맛본 현장직원이 복귀 거부 → 교체 비용 극대화. XAI 모듈 추가 Upsell로 LTV 극대화.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 6 ===== -->
+<div class="slide" id="s6">
+  <div class="badge" style="background:rgba(126,184,247,.15);color:#7eb8f7;margin-bottom:16px;">PRODUCT ROADMAP</div>
+  <h1 class="slide-title">Job – MVP Feature Map</h1>
+  <p class="subtitle">기능 우선순위 · 구현 난이도 · 리스크 대응 전략</p>
+  <table class="feat-table">
+    <thead>
+      <tr>
+        <th>우선순위</th>
+        <th>기능명 (Epic)</th>
+        <th>해결하는 Job (고객 목소리)</th>
+        <th>중요도</th>
+        <th>난이도</th>
+        <th>MVP 포함</th>
+        <th>리스크 헤징</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="prio p1"></span><strong style="color:#e94560;">P1</strong></td>
+        <td><strong>무입력 패시브 로깅</strong><br><span style="font-size:11px;opacity:.6;">Vision OCR + 음성 STT</span></td>
+        <td style="font-size:12px;">"장갑을 벗지 않고 말만 하면<br>공정 일지가 채워졌으면"</td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:100%;background:#e94560;"></div></div><small>5/5</small></td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:80%;background:#f5a623;"></div></div><small>4/5</small></td>
+        <td class="mvp-yes">✔ MVP 핵심</td>
+        <td style="font-size:11px;opacity:.7;">소음 하 인식률 85% 미달 시<br>1클릭 수동 확인 UI 대체</td>
+      </tr>
+      <tr>
+        <td><span class="prio p1"></span><strong style="color:#e94560;">P1</strong></td>
+        <td><strong>원클릭 감사 리포터</strong><br><span style="font-size:11px;opacity:.6;">Lot 머지 + PDF 생성</span></td>
+        <td style="font-size:12px;">"감사팀이 떴을 때 10초 만에<br>Traceability PDF를 드리고 싶다"</td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:100%;background:#e94560;"></div></div><small>5/5</small></td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:40%;background:#4cdd7a;"></div></div><small>2/5</small></td>
+        <td class="mvp-yes">✔ MVP 필수</td>
+        <td style="font-size:11px;opacity:.7;">데이터 결측 시 강제 알림<br>체커 로직 내장</td>
+      </tr>
+      <tr>
+        <td><span class="prio p1"></span><strong style="color:#e94560;">P1</strong></td>
+        <td><strong>레거시 ERP API 브릿지</strong><br><span style="font-size:11px;opacity:.6;">Read-Only + 엑셀 Batch</span></td>
+        <td style="font-size:12px;">"기존 더존/영림원을 건드리지 않고<br>두 시스템 데이터 일치를 보고 싶다"</td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:100%;background:#e94560;"></div></div><small>5/5</small></td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:60%;background:#f5a623;"></div></div><small>3/5</small></td>
+        <td class="mvp-yes">✔ MVP 필수</td>
+        <td style="font-size:11px;opacity:.7;">API 개방 거부 시<br>엑셀 드래그&드롭 파이프라인</td>
+      </tr>
+      <tr>
+        <td><span class="prio p2"></span><strong style="color:#f5a623;">P2</strong></td>
+        <td><strong>CFO 바우처/ROI 설계기</strong><br><span style="font-size:11px;opacity:.6;">웹 시뮬레이터</span></td>
+        <td style="font-size:12px;">"자부담이 얼마인지, 절감 효과가<br>얼마인지 1페이지로 보고 싶다"</td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:80%;background:#e94560;"></div></div><small>4/5</small></td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:40%;background:#4cdd7a;"></div></div><small>2/5</small></td>
+        <td class="mvp-yes">✔ 영업 무기</td>
+        <td style="font-size:11px;opacity:.7;">초기 Fake 웹 시뮬레이터로<br>수동 계산 후 자동화</td>
+      </tr>
+      <tr style="opacity:.5;">
+        <td><span class="prio p3"></span><strong style="color:#4cdd7a;">P3</strong></td>
+        <td><strong>AI 공정 스케줄러</strong><br><span style="font-size:11px;opacity:.6;">최적화 알고리즘</span></td>
+        <td style="font-size:12px;">"스케줄러 1인 퇴사해도<br>공장이 돌아가게 하고 싶다"</td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:80%;background:#e94560;"></div></div><small>4/5</small></td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:100%;background:#e94560;"></div></div><small>5/5</small></td>
+        <td class="mvp-no">✖ Phase 2</td>
+        <td style="font-size:11px;opacity:.7;">개발 6개월↑ · 현장 변수 과다<br>→ 데이터 축적 후 진행</td>
+      </tr>
+      <tr style="opacity:.5;">
+        <td><span class="prio px"></span><strong style="color:#555;">Out</strong></td>
+        <td><strong>온프레미스 보안 패키지</strong></td>
+        <td style="font-size:12px;">"클라우드는 절대 안 됨"</td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:60%;background:#e94560;"></div></div><small>3/5</small></td>
+        <td><div class="bar" style="width:70px;"><div class="bar-fill" style="width:80%;background:#f5a623;"></div></div><small>4/5</small></td>
+        <td class="mvp-no">✖ Phase 2</td>
+        <td style="font-size:11px;opacity:.7;">보안 협의 가능 기업 우선 타겟<br>→ on-prem은 Upsell</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- slides-wrap -->
+
+<!-- Navigation -->
+<div class="slide-num" id="slideNum">01 / 06</div>
+<div class="nav">
+  <button class="arrow" onclick="prev()">← 이전</button>
+  <div class="dot active" onclick="goTo(0)"></div>
+  <div class="dot" onclick="goTo(1)"></div>
+  <div class="dot" onclick="goTo(2)"></div>
+  <div class="dot" onclick="goTo(3)"></div>
+  <div class="dot" onclick="goTo(4)"></div>
+  <div class="dot" onclick="goTo(5)"></div>
+  <button class="arrow" onclick="next()">다음 →</button>
+</div>
+
+<script>
+let cur=0;const slides=document.querySelectorAll('.slide');const dots=document.querySelectorAll('.dot');const num=document.getElementById('slideNum');
+function goTo(n){slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');dots[cur].classList.add('active');num.textContent=String(cur+1).padStart(2,'0')+' / 06';}
+function next(){if(cur<slides.length-1)goTo(cur+1);}
+function prev(){if(cur>0)goTo(cur-1);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')next();if(e.key==='ArrowLeft'||e.key==='ArrowUp')prev();});
+</script>
+</body>
+</html>
