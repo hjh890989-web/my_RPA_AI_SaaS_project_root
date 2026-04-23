@@ -1,0 +1,25 @@
+﻿---
+tags: [entity, db_schema]
+---
+# USER
+
+## ?뱰 媛쒖슂
+?뚮옯?쇱뿉 濡쒓렇?명븯??紐⑤뱺 ?ъ슜???뺣낫瑜??닿퀬 ?덉뒿?덈떎. ?쒖뒪???꾨컲??Role-Based Access Control (RBAC)???꾪빐 5媛吏 ??븷???꾧꺽?섍쾶 遺꾨━?⑸땲??
+
+## ?뾼截??ㅽ궎留?(Schema)
+| ?꾨뱶紐?| ???| ?쒖빟 | ?ㅻ챸 |
+|:---|:---|:---|:---|
+| id | UUID | PK | ?ъ슜??怨좎쑀 ?앸퀎??|
+| name | VARCHAR(255) | NOT NULL | ?ъ슜?먮챸 |
+| email | VARCHAR(255) | UNIQUE, NOT NULL | ?대찓??|
+| role | ENUM | NOT NULL | ??븷 (ADMIN, OPERATOR, AUDITOR, VIEWER, CISO) |
+| factory_id | UUID | FK ??FACTORY | ?뚯냽 怨듭옣 |
+| is_active | BOOLEAN | DEFAULT TRUE | 怨꾩젙 ?쒖꽦 ?곹깭 |
+| created_at | TIMESTAMP | NOT NULL | 怨꾩젙 ?앹꽦?쇱떆 |
+| last_login_at | TIMESTAMP | ??| 理쒖쥌 濡쒓렇???쇱떆 |
+
+## ?뵕 ?곌? 愿怨?- ?뚯냽: [[FACTORY]]
+- ?뱀씤 ?섑뻾: [[APPROVAL]], [[AUDIT_REPORT]]
+
+## ?뱴 異쒖쿂 臾명뿄
+- [[18_SRS_V07]]

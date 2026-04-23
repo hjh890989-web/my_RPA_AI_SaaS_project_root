@@ -1,0 +1,22 @@
+﻿---
+tags: [entity, db_schema]
+---
+# WORK_ORDER
+
+## ?뱰 媛쒖슂
+?앹궛 ?쇱씤???섎떖??援ъ껜?곸씤 ?묒뾽 吏?쒖엯?덈떎. ?곗씠??濡쒓퉭(LOG_ENTRY)怨??앹궛 ?대젰(LOT) 異붿쟻??以묒떖?먯씠 ?⑸땲??
+
+## ?뾼截??ㅽ궎留?(Schema)
+| ?꾨뱶紐?| ???| ?쒖빟 | ?ㅻ챸 |
+|:---|:---|:---|:---|
+| id | UUID | PK | ?묒뾽吏??怨좎쑀 ?앸퀎??|
+| line_id | UUID | FK ??PRODUCTION_LINE | ?뚯냽 ?쇱씤 |
+| status | ENUM | NOT NULL | ?곹깭 (PENDING, IN_PROGRESS, COMPLETE, IDLE) |
+| created_at | TIMESTAMP | NOT NULL | ?앹꽦?쇱떆 |
+| confirmed_at | TIMESTAMP | ??| ?뺤젙?쇱떆 |
+
+## ?뵕 ?곌? 愿怨?- ?뚯냽: [[PRODUCTION_LINE]]
+- ?뚯깮: [[LOG_ENTRY]], [[LOT]]
+
+## ?뱴 異쒖쿂 臾명뿄
+- [[18_SRS_V07]]
