@@ -1,3 +1,14 @@
+/**
+ * @file Security.tsx — 보안 콘솔
+ * @description 시스템 보안 상태 모니터링 및 액세스 제어 관리 페이지 (CISO 주요 사용).
+ *   - 상단: 4개 보안 KPI (보안 점수, 활성 세션, 차단 시도, 마지막 스캔)
+ *   - 좌측: 실시간 액세스 로그 테이블 (사용자, 작업, IP, 상태)
+ *   - 우측: 영역별 위협 탐지 + RBAC 역할 현황
+ *
+ * @ai-context Mock 데이터: securityStats(4개), accessLogs(5개), threatLevels(4개).
+ *   "긴급 락다운" 버튼은 UI만 존재하며 실제 기능 미구현.
+ *   Table 컴포넌트를 사용하는 2개 페이지 중 하나 (다른 하나: ERP.tsx).
+ */
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'

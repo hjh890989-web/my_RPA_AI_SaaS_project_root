@@ -1,3 +1,16 @@
+/**
+ * @file LogReview.tsx — HITL 인간 승인 (Human-In-The-Loop)
+ * @description AI가 구조화한 데이터를 사람이 최종 검토/승인하는 페이지.
+ *   - 좌측: 원본 입력 데이터 (Original Input + Metadata)
+ *   - 우측: AI 구조화 결과 (필드별 편집 가능, Confidence 점수 표시)
+ *   - 하단: Approve / Reject / Rollback 액션 버튼
+ *
+ * @ai-context 검토 대상 데이터는 `pendingItems` 상수에 하드코딩.
+ *   현재 단일 페이지로 모든 검토 항목을 나열하며, 동적 라우팅(/review/:id)은 미구현.
+ *   "AI 단독 실행 0건" 원칙의 핵심 구현부입니다.
+ *
+ * @see LogEntries.tsx — 이 페이지로 이동시키는 상위 페이지
+ */
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'

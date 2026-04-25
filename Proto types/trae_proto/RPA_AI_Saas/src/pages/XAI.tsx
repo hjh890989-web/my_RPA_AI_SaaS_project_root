@@ -1,3 +1,13 @@
+/**
+ * @file XAI.tsx — XAI 품질 이상탐지 (Explainable AI)
+ * @description AI가 탐지한 이상 징후의 근거(Decision Logic)를 투명하게 보여주는 페이지.
+ *   - 메인: 이상 징후 상세 + AI 판단 로직 (형태 분석, 환경 변수)
+ *   - 사이드: 탐지 정확도 추이 차트 + 학습 데이터셋 상태
+ *   - 하단: 수동 판단 모드 / 승인 및 리포트 발행 버튼
+ *
+ * @ai-context 이상 탐지 데이터는 모두 인라인 하드코딩. Confidence 98.2%, Latency 42ms 등.
+ *   바 차트는 CSS div 기반으로 구현되어 있으며, 실제 차트 라이브러리(recharts 등) 미사용.
+ */
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'

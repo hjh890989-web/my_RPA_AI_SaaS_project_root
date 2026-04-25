@@ -1,3 +1,14 @@
+/**
+ * @file Login.tsx — 역할 기반 Quick Login
+ * @description 5가지 역할(ADMIN, OPERATOR, AUDITOR, VIEWER, CISO)로 빠르게 로그인하는 데모용 페이지.
+ *   실제 인증 없이 localStorage에 userRole을 저장하고 /dashboard로 리다이렉트합니다.
+ *   Layout.tsx를 사용하지 않는 유일한 페이지 (독립적인 전체 화면 레이아웃).
+ *
+ * @ai-context roles 상수에 5개 역할 정의. handleLogin(role)이 인증 진입점.
+ *   MVP에서는 Firebase Auth 등으로 교체 필요. 이 페이지는 Layout 없이 독립 렌더링됩니다.
+ *
+ * @see Layout.tsx — 로그인 후 진입하는 레이아웃
+ */
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Shield, User, Camera, FileSearch, Eye, Lock } from 'lucide-react'

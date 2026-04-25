@@ -1,3 +1,13 @@
+/**
+ * @file AuditReports.tsx — 감사 리포트 관리
+ * @description 품질 감사 및 AI 분석 결과 보고서를 관리하고 PDF로 발행하는 페이지.
+ *   - 상단: 4개 통계 카드 (총 발행 리포트, 이번 달 감사, 결측치 탐지, 최종 승인율)
+ *   - 메인: 검색 + 필터가 포함된 리포트 목록 (WEEKLY/INCIDENT/QUARTERLY)
+ *
+ * @ai-context Mock 데이터는 `reports` 상수에 3건 정의.
+ *   리포트 클릭 시 /log-entries/review로 이동하는데, 향후 전용 상세 페이지 필요.
+ *   AUDITOR 역할이 주로 사용하는 페이지입니다.
+ */
 import React from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'

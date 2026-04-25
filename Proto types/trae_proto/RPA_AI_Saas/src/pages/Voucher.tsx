@@ -1,3 +1,13 @@
+/**
+ * @file Voucher.tsx — 정부 바우처 관리 (ADMIN 전용)
+ * @description 스마트공장 보급확산 사업 지원금 및 집행 현황을 관리하는 페이지.
+ *   - 상단: 6단계 스테퍼 (임시저장 → 신청 → 선정 → 협약 → 정산 → 종료)
+ *   - 좌측: 예산 집행 현황 (총 사업비 2,500만원, 자부담 800만원, 소진율 45%)
+ *   - 우측: 최근 증빙 서류 목록 + 업로드 버튼
+ *
+ * @ai-context voucherSteps 상수에 6단계 정의. currentStep으로 현재 단계 하이라이트.
+ *   ADMIN 역할에서만 사이드바에 노출됩니다 (Layout.tsx의 adminNavigation 참조).
+ */
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'

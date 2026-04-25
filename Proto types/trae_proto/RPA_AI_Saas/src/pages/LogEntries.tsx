@@ -1,3 +1,16 @@
+/**
+ * @file LogEntries.tsx — 제로터치 로깅 (데이터 인입 + AI 구조화)
+ * @description 음성(STT), 카메라(Vision), 엑셀 데이터를 AI가 실시간 구조화하는 핵심 업무 페이지.
+ *   - 3가지 입력 방식 카드 (각각 /log-entries/review로 연결)
+ *   - 실시간 AI 분석 진행 상태 바
+ *   - 최근 인입 데이터 목록 (탭 필터: ALL/STT/VISION/EXCEL)
+ *
+ * @ai-context Mock 데이터는 `mockLogs` 상수에 정의. status 값: AI_ANALYZING, PENDING_REVIEW, APPROVED.
+ *   activeTab 상태로 필터링 UI를 제공하나, 실제 필터링 로직은 미구현 (Mock 고정).
+ *   navigate를 통해 /log-entries/review로 이동하며, 현재 로그 ID를 전달하지 않음.
+ *
+ * @see LogReview.tsx — HITL 인간 승인 페이지 (이 페이지에서 이동)
+ */
 import React, { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'

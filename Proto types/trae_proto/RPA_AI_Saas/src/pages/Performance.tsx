@@ -1,3 +1,14 @@
+/**
+ * @file Performance.tsx — 성과 분석 대시보드
+ * @description 공장 전체의 생산성 및 품질 KPI 달성 현황을 시각화하는 페이지.
+ *   - 상단: 4개 KPI 카드 (OEE, 품질 합격률, 시간당 생산량, 다운타임)
+ *   - 좌측: 생산 및 품질 트렌드 바 차트 (최근 30일)
+ *   - 우측: 목표 달성률 프로그레스 바 + 최근 주요 성과
+ *
+ * @ai-context kpiStats(4개)와 performanceGoals(4개)가 Mock 데이터.
+ *   바 차트는 CSS div 기반으로 구현 (recharts 등 미사용).
+ *   Dashboard.tsx와 동일한 StatCard 패턴을 반복합니다.
+ */
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'

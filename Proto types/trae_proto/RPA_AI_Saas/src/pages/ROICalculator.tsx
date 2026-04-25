@@ -1,3 +1,14 @@
+/**
+ * @file ROICalculator.tsx — FactoryAI ROI 계산기
+ * @description FactoryAI 도입 시 예상되는 비용 절감액과 ROI를 실시간 계산하는 인터랙티브 도구.
+ *   - 좌측: 공정 데이터 입력 (인건비, 생산량, 불량률) — useState로 상태 관리
+ *   - 우측 상단: 예상 월간 절감액 + ROI % + 손익분기점
+ *   - 우측 하단: 비용 비교 바 차트 + 핵심 개선 지표 3종
+ *
+ * @ai-context 유일하게 useState를 적극적으로 사용하는 페이지.
+ *   laborCost, monthlyVolume, errorRate 3개의 상태로 실시간 계산.
+ *   계산 공식은 간소화된 Mock 수준이며, 실제 ROI 공식은 별도 구현 필요.
+ */
 import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'

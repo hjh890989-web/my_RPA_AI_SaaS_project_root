@@ -1,3 +1,12 @@
+/**
+ * @file Onboarding.tsx — 시스템 온보딩 가이드 (ADMIN 전용)
+ * @description FactoryAI 도입을 위한 5단계 설정 프로세스를 안내하는 페이지.
+ *   각 단계: 회사 정보 → 사용자/권한 → 데이터 소스 → ERP/MES → AI 모델 최적화
+ *   현재 진행 중인 단계(in_progress)에 강조 표시와 "설정하기" 버튼이 노출됩니다.
+ *
+ * @ai-context steps 상수에 5단계 정의. status 값: completed, in_progress, pending.
+ *   ADMIN 역할에서만 사이드바에 노출됩니다 (Layout.tsx의 adminNavigation 참조).
+ */
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'

@@ -1,3 +1,13 @@
+/**
+ * @file ERP.tsx — ERP 연동 관리
+ * @description 외부 ERP 시스템(SAP, Oracle, Legacy Excel)과의 데이터 동기화 현황 관리 페이지.
+ *   - 상단: 3개 ERP 연결 상태 카드 (연결됨/점검필요)
+ *   - 좌측: 필드 매핑 테이블 (FactoryAI ↔ ERP 필드 매핑)
+ *   - 우측: 최근 동기화 로그 (성공/실패 이력)
+ *
+ * @ai-context Mock 데이터: erpConnections(3개), mappingData(5개), syncLogs(4개).
+ *   Table 컴포넌트를 사용하는 2개 페이지 중 하나 (다른 하나: Security.tsx).
+ */
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'

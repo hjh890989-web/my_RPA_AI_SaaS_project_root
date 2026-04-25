@@ -1,3 +1,17 @@
+/**
+ * @file Layout.tsx — FactoryAI 메인 레이아웃 (사이드바 + 헤더 + 콘텐츠)
+ * @description 인증된 모든 페이지의 공통 레이아웃을 제공합니다.
+ *   - 좌측 사이드바: 네비게이션 메뉴 (ADMIN 역할 시 추가 메뉴 노출)
+ *   - 상단 헤더: 시스템 상태 표시, 모바일 메뉴 토글
+ *   - 메인 영역: children으로 전달받은 페이지 컴포넌트 렌더링
+ *
+ * @ai-context 메뉴 항목을 추가/수정할 때 `navigation` 또는 `adminNavigation` 배열을 수정합니다.
+ *   현재 인증 상태는 localStorage('userRole')에서 직접 읽으며,
+ *   향후 AuthContext로 전환이 필요합니다.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - 라우트에 의해 전달되는 페이지 컴포넌트
+ */
 import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { 
@@ -17,6 +31,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+/** 기본 네비게이션 메뉴 항목. 모든 역할에게 표시됩니다. */
 const navigation = [
   { name: '대시보드', href: '/dashboard', icon: LayoutDashboard },
   { name: '로깅 엔트리', href: '/log-entries', icon: ClipboardList },
@@ -28,6 +43,7 @@ const navigation = [
   { name: 'ROI 계산기', href: '/roi-calculator', icon: Calculator },
 ]
 
+/** ADMIN 역할 전용 추가 메뉴 항목. userRole === 'ADMIN'일 때만 사이드바에 추가됩니다. */
 const adminNavigation = [
   { name: '온보딩 관리', href: '/admin/onboarding', icon: Settings },
   { name: '바우처 관리', href: '/admin/voucher', icon: Calculator },

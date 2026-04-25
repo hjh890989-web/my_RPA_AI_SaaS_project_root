@@ -1,3 +1,17 @@
+/**
+ * @file Dashboard.tsx — 현장 운영 대시보드 (메인 페이지)
+ * @description 로그인 후 최초 진입 페이지. 실시간 공장 운영 현황을 한눈에 보여줍니다.
+ *   - 상단: 4개 KPI 통계 카드 (오늘의 로그, AI 구조화율, 검토 대기, 이상 징후)
+ *   - 좌측: 실시간 로깅 피드 (STT/Vision/Manual 구분)
+ *   - 우측: 시스템 상태 (AI 가동률, ERP 동기화, 경보)
+ *
+ * @ai-context KPI 데이터는 `stats` 상수에, 로그 피드는 `recentLogs` 상수에 정의되어 있습니다.
+ *   두 데이터 모두 현재 하드코딩된 Mock입니다. API 연동 시 useSWR/useQuery로 교체하세요.
+ *   userRole은 localStorage에서 읽으며, 현재 역할별 분기 로직은 미구현 상태입니다.
+ *
+ * @see LogEntries.tsx — "전체보기" 링크 대상
+ * @see LogReview.tsx — 각 로그 항목 클릭 시 이동 대상
+ */
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
