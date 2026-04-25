@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FactoryAI Prototype UI Flow Viewer</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #0f172a;
+            color: #f1f5f9;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+        .carousel-container {
+            position: relative;
+            width: 95%;
+            max-width: 1280px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: #1e293b;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .slide-caption {
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .slide-index {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #38bdf8;
+            color: #0f172a;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .slide-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f8fafc;
+            margin: 0;
+        }
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 30px 20px;
+            cursor: pointer;
+            font-size: 30px;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        .nav-btn:hover {
+            background: rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+        }
+        .next {
+            right: 0;
+            border-radius: 8px 0 0 8px;
+        }
+        .prev {
+            left: 0;
+        }
+        .indicators {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+            padding-bottom: 40px;
+            max-width: 90%;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #334155;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .dot.active {
+            background: #38bdf8;
+            box-shadow: 0 0 12px #38bdf8;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>FactoryAI UI Flow (최종 정렬)</h1>
+        <p>성과관리(7), ROI(8), 온보딩(9), 바우처(10) 순서로 완벽하게 정렬되었습니다.</p>
+    </div>
+
+    <div class="carousel-container">
+        <button class="nav-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="nav-btn next" onclick="moveSlide(1)">&#10095;</button>
+        
+        <div class="carousel-track" id="track">
+            <div class="carousel-slide">
+                <img src="capture_trae_01_login.png" alt="01">
+                <div class="slide-caption"><span class="slide-index">01</span><p class="slide-title">로그인 페이지</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_02_dashboard.png" alt="02">
+                <div class="slide-caption"><span class="slide-index">02</span><p class="slide-title">메인 대시보드</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_03_log_entries.png" alt="03">
+                <div class="slide-caption"><span class="slide-index">03</span><p class="slide-title">제로터치 로깅</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_04_log_entries_review.png" alt="04">
+                <div class="slide-caption"><span class="slide-index">04</span><p class="slide-title">HITL 승인 뷰어</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_05_xai.png" alt="05">
+                <div class="slide-caption"><span class="slide-index">05</span><p class="slide-title">XAI 품질 이상탐지</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_06_audit_reports.png" alt="06">
+                <div class="slide-caption"><span class="slide-index">06</span><p class="slide-title">감사 리포트</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_07_performance.png" alt="07">
+                <div class="slide-caption"><span class="slide-index">07</span><p class="slide-title">성과 대시보드</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_08_roi_calculator.png" alt="08">
+                <div class="slide-caption"><span class="slide-index">08</span><p class="slide-title">ROI 계산기</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_09_admin_onboarding.png" alt="09">
+                <div class="slide-caption"><span class="slide-index">09</span><p class="slide-title">온보딩 관리 (ADMIN)</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_10_admin_voucher.png" alt="10">
+                <div class="slide-caption"><span class="slide-index">10</span><p class="slide-title">바우처 관리 (ADMIN)</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_11_erp.png" alt="11">
+                <div class="slide-caption"><span class="slide-index">11</span><p class="slide-title">ERP 연동 관리</p></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="capture_trae_12_security.png" alt="12">
+                <div class="slide-caption"><span class="slide-index">12</span><p class="slide-title">CISO 보안 콘솔</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="indicators" id="dots"></div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const track = document.getElementById('track');
+        const dotsContainer = document.getElementById('dots');
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function moveSlide(direction) {
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') moveSlide(-1);
+            if (e.key === 'ArrowRight') moveSlide(1);
+        });
+    </script>
+</body>
+</html>
