@@ -1,20 +1,53 @@
 @echo off
+setlocal
 cd /d "%~dp0"
-echo Node.js 설치 확인 중...
+
+echo ==========================================
+echo   FactoryAI Prototype Launcher
+echo ==========================================
+echo.
+
+echo [1/3] Checking Node.js...
 node -v >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [오류] Node.js가 설치되어 있지 않거나 PATH 설정이 되어 있지 않습니다.
-    echo https://nodejs.org/ 에서 LTS 버전을 설치한 후 다시 실행해 주세요.
+    echo.
+    echo ERROR: Node.js is not installed!
+    echo Please install LTS version from https://nodejs.org/
+    echo.
     pause
     exit /b
 )
 
-echo 필요한 패키지 설치 중 (최초 1회 실행 시 시간이 다소 소요될 수 있습니다)...
+echo [2/3] Checking dependencies...
 if not exist "node_modules" (
+    echo.
+    echo node_modules not found. Installing packages...
+    echo (This may take a few minutes for the first time)
     call npm install
+    if %errorlevel% neq 0 (
+        echo.
+        echo ERROR: Failed to install packages.
+        echo Please check your internet connection and try again.
+        pause
+        exit /b
+    )
 )
 
-echo 개발 서버 실행 중... http://localhost:3000 주소로 접속합니다.
-start http://localhost:3000
-call npm run dev
+echo [3/3] Starting Dev Server...
+echo.
+echo The browser should open automatically.
+echo If not, please open http://localhost:3000 in your browser.
+echo.
+echo To stop the server, press Ctrl+C in this window.
+echo.
+
+:: Use npm run dev with --open flag
+call npm run dev -- --open
+
+if %errorlevel% neq 0 (
+    echo.
+    echo ERROR: Failed to start the server.
+    pause
+)
+
 pause
