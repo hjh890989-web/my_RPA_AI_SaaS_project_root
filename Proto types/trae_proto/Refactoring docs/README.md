@@ -86,7 +86,8 @@ Proto types/trae_proto/
 │   │   └── hooks/                  # (비어있음 — 향후 useAuth 등)
 │   ├── package.json
 │   ├── vite.config.ts
-│   └── tailwind.config.js
+│   ├── tailwind.config.js
+│   └── 프로토타입_실행.bat         # ✨ 윈도우용 원클릭 실행 스크립트
 │
 ├── capture_trae/                   # UI 캡처 도구 및 결과물
 │   ├── capture.mjs                 # Puppeteer 자동 캡처 스크립트
@@ -177,19 +178,22 @@ flowchart LR
 
 ## 🚀 실행 방법
 
-```bash
-# 1. 프로젝트 디렉토리로 이동
-cd "Proto types/trae_proto/RPA_AI_Saas"
+### 방법 1: 윈도우 원클릭 실행 (추천)
+윈도우 환경의 보안 정책(Execution Policy) 이슈를 해결한 실행 파일입니다.
+1. `Proto types/trae_proto/RPA_AI_Saas/` 폴더로 이동합니다.
+2. `프로토타입_실행.bat` 파일을 더블 클릭합니다.
 
-# 2. 의존성 설치
-npm install
+### 방법 2: 터미널 수동 실행
+1. 프로젝트 디렉토리로 이동:
+   `cd "Proto types/trae_proto/RPA_AI_Saas"`
+2. 의존성 설치: `npm install`
+3. 개발 서버 실행: `cmd /c "npm run dev"`
 
-# 3. 개발 서버 실행
-npm run dev
+---
 
-# 4. 브라우저에서 접속
-# http://localhost:3000
-```
+### 🌐 접속 주소
+브라우저에서 다음 주소로 접속하세요:
+👉 **[http://localhost:3000](http://localhost:3000)**
 
 ---
 
@@ -241,6 +245,6 @@ gantt
 
 ---
 
-> **작성일**: 2026-04-26  
+> **작성일**: 2026-05-03  
 > **작성 도구**: Antigravity AI Assistant  
 > **소스 프롬프트**: [9_fire studio prompt_final.md](../../UI%20Proto%20plan/9_fire%20studio%20prompt_final.md)
