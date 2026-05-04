@@ -1,1 +1,0 @@
-import{j as r,b as t}from"./index-5Y8DkKw6.js";function a({value:s,colorClass:n="bg-mint",trackColorClass:e="bg-slate-800",className:i}){return r.jsx("div",{className:t("h-2 rounded-full overflow-hidden",e,i),children:r.jsx("div",{className:t("h-full transition-all duration-500",n),style:{width:typeof s=="number"?`${s}%`:s}})})}export{a as P};
