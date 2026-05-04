@@ -2,13 +2,6 @@
  * @file Landing.tsx — FactoryAI 랜딩페이지 (고객 Hook 단계)
  * @description CTA를 통해 Login/Dashboard로 진입하게 유도하는 최전면 마케팅 페이지.
  *   전략 유형: C유형(결과 지향형) + B유형(기술 몰입형) 혼합
- *   - Hero Section: 핵심 가치 제안 + 이중 CTA
- *   - Social Proof: 로고 월 + 수치 증명
- *   - Input-Output Diagram: 복잡성을 숨긴 마법 같은 흐름
- *   - Feature Cards: 혜택 중심 서술
- *   - Before/After: ROI 비교
- *   - Safety Trust: 안전 장치 강조
- *   - Final CTA: 반복 배치된 행동 유도
  */
 import React, { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -16,11 +9,10 @@ import {
   Mic, Camera, FileText, Shield, BarChart3, Zap,
   ArrowRight, ChevronRight, CheckCircle2, Lock,
   Eye, Activity, TrendingUp, Factory, Database, Brain,
-  Clock, AlertTriangle, Play
+  Clock, AlertTriangle, Play, FileCheck, Calculator, Briefcase
 } from 'lucide-react'
 import './landing.css'
 
-/* ── Scroll-triggered fade-in hook ── */
 function useFadeIn() {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -41,7 +33,6 @@ function FadeSection({ children, className = '' }: { children: React.ReactNode; 
   return <div ref={ref} className={`fade-in-section ${className}`}>{children}</div>
 }
 
-/* ── Navbar (fixed, glassmorphism on scroll) ── */
 function Navbar({ onCTA }: { onCTA: () => void }) {
   const [scrolled, setScrolled] = React.useState(false)
   useEffect(() => {
@@ -52,12 +43,11 @@ function Navbar({ onCTA }: { onCTA: () => void }) {
   return (
     <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-logo">Factory<span>AI</span></div>
-      <button className="nav-cta" onClick={onCTA}>무료 체험 시작 →</button>
+      <button className="nav-cta" onClick={onCTA}>Traceability 진단 받기 →</button>
     </nav>
   )
 }
 
-/* ── Main Landing Component ── */
 export default function Landing() {
   const navigate = useNavigate()
   const goLogin = () => navigate('/login')
@@ -78,48 +68,48 @@ export default function Landing() {
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 1100, margin: '0 auto', padding: '160px 24px 80px', textAlign: 'center' }}>
           <div className="landing-badge">
             <span className="pulse-dot" />
-            중소 제조 현장 특화 AI · 지금 바로 도입 가능
+            중소·중견 제조 현장 특화 AI · 정부 바우처 최대 80% 지원
           </div>
 
           <h1 className="landing-headline" style={{ marginTop: 28 }}>
-            기록은 AI가,<br />
-            <span className="gradient-text">판단은 사람이.</span>
+            현장의 수기 입력은 <span style={{ color: '#EF4444' }}>Zero</span>로,<br />
+            원청사 감사 방어율은 <span className="gradient-text">100%</span>로.
           </h1>
 
           <p className="landing-subhead" style={{ margin: '24px auto 0' }}>
-            음성 한마디, 카메라 한 대면 공장 데이터가 자동으로 쌓입니다.<br />
-            FactoryAI는 기존 ERP를 건드리지 않고, AI가 수집·구조화하고<br />
-            사람이 최종 승인하는 <strong style={{ color: '#fff' }}>HITL(Human-in-the-Loop)</strong> 시스템입니다.
+            장갑 벗을 필요 없는 <strong>무입력 패시브 로깅(STT/Vision)</strong>부터<br />
+            글로벌 벤더(삼성, 현대차) 실사를 완벽 방어하는 <strong>10초 원클릭 감사 리포트</strong>까지.<br />
+            FactoryAI는 퇴사 리스크(SPOF)를 지우고 생산 연속성을 극대화하는 <strong style={{ color: '#fff' }}>Traceability 브릿지 솔루션</strong>입니다.
           </p>
 
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginTop: 40, flexWrap: 'wrap' }}>
             <button className="cta-primary" onClick={goLogin}>
               <Play style={{ width: 18, height: 18 }} />
-              무료 데모 체험하기
+              무상 진단 데모 신청
             </button>
-            <button className="cta-secondary" onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}>
-              어떻게 작동하나요?
-              <ChevronRight style={{ width: 16, height: 16 }} />
+            <button className="cta-secondary" onClick={() => navigate('/roi-calculator')}>
+              <Calculator style={{ width: 18, height: 18 }} />
+              B2B ROI 시뮬레이션
             </button>
           </div>
 
           {/* Stats bar */}
           <div className="stats-bar">
             <div className="stat-item">
-              <div className="stat-value">95%</div>
-              <div className="stat-label">데이터 입력 시간 단축</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-value">99.8%</div>
-              <div className="stat-label">불량 탐지 정확도</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-value">3.2개월</div>
-              <div className="stat-label">평균 손익분기점</div>
-            </div>
-            <div className="stat-item">
               <div className="stat-value">0건</div>
-              <div className="stat-label">AI 단독 실행 원칙</div>
+              <div className="stat-label">작업자 수동 입력</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-value">10초</div>
+              <div className="stat-label">감사 증빙 PDF 생성</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-value">최대 80%</div>
+              <div className="stat-label">바우처 도입 지원금</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-value">100%</div>
+              <div className="stat-label">ERP 레거시 비파괴 보장</div>
             </div>
           </div>
         </div>
@@ -129,13 +119,13 @@ export default function Landing() {
       <section className="landing-section section-dark" style={{ paddingTop: 60, paddingBottom: 60 }}>
         <FadeSection>
           <p style={{ textAlign: 'center', fontSize: 13, color: '#475569', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 24 }}>
-            국내 제조 현장에서 검증된 기술
+            글로벌 원청사 실사 통과 및 정부 지원사업 검증 완료
           </p>
           <div className="logo-wall">
-            {['한국생산기술연구원', '중소벤처기업부', 'KOTRA', 'SAP Partner', '스마트공장추진단'].map((name) => (
+            {['스마트제조혁신추진단', '중소벤처기업부 공식 바우처', 'EU CBAM 대응 파트너', 'S/H사 실사 통과 레퍼런스', '영림원/더존 연동 인증'].map((name) => (
               <div className="logo-item" key={name}>
                 <div className="logo-icon-box">
-                  <Factory style={{ width: 16, height: 16, color: '#64748b' }} />
+                  <Shield style={{ width: 16, height: 16, color: '#64748b' }} />
                 </div>
                 {name}
               </div>
@@ -144,124 +134,101 @@ export default function Landing() {
         </FadeSection>
       </section>
 
-      {/* ════════════ INPUT-OUTPUT DIAGRAM ════════════ */}
-      <section className="landing-section section-darker" id="features">
+      {/* ════════════ TARGET PERSONA PAIN POINTS ════════════ */}
+      <section className="landing-section section-darker">
         <FadeSection>
-          <p className="section-subtitle" style={{ marginBottom: 0, marginTop: 0, fontWeight: 600, color: '#4ECDC4', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.08em' }}>How It Works</p>
-          <h2 className="section-title" style={{ marginTop: 12 }}>
-            넣으면, 나옵니다.
-          </h2>
-          <p className="section-subtitle">
-            복잡한 세팅 없이 현장 데이터를 입력하면,<br />
-            AI가 구조화하고 사람이 승인하여 즉시 ERP에 반영됩니다.
-          </p>
-
-          <div className="io-diagram" style={{ marginTop: 48 }}>
-            <div className="io-box io-input">
-              <div className="io-box-title" style={{ color: '#3B82F6' }}>INPUT</div>
-              <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginBottom: 12 }}>
-                <Mic style={{ width: 20, height: 20, color: '#3B82F6' }} />
-                <Camera style={{ width: 20, height: 20, color: '#3B82F6' }} />
-                <FileText style={{ width: 20, height: 20, color: '#3B82F6' }} />
+          <p className="section-subtitle" style={{ marginBottom: 0, marginTop: 0, fontWeight: 600, color: '#EF4444', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Are you facing these nightmares?</p>
+          <h2 className="section-title" style={{ marginTop: 12 }}>이런 '단일 장애점(SPOF)'을 겪고 계신가요?</h2>
+          <div className="feature-grid" style={{ marginTop: 40 }}>
+            <div className="feature-card" style={{ borderColor: 'rgba(239,68,68,0.2)' }}>
+              <div className="feature-icon-box" style={{ background: 'rgba(239,68,68,0.1)' }}>
+                <Factory style={{ width: 24, height: 24, color: '#EF4444' }} />
               </div>
-              <div className="io-box-desc">음성 · 카메라 · Excel<br />현장 데이터 수집</div>
+              <h3 style={{ color: '#fff' }}>운영본부장 (COO)의 공포</h3>
+              <p>"핵심 스케줄러가 퇴사하면 공장 가동이 마비됩니다. 현장 작업자들은 장갑 벗고 키오스크 입력하는 걸 전면 거부하고 매일 갈등만 생깁니다."</p>
             </div>
-
-            <div className="io-arrow">→</div>
-
-            <div className="io-box io-engine">
-              <div className="io-box-title" style={{ color: '#4ECDC4' }}>⚡ FactoryAI Engine</div>
-              <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginBottom: 12 }}>
-                <Brain style={{ width: 20, height: 20, color: '#4ECDC4' }} />
-                <Eye style={{ width: 20, height: 20, color: '#4ECDC4' }} />
+            <div className="feature-card" style={{ borderColor: 'rgba(245,158,11,0.2)' }}>
+              <div className="feature-icon-box" style={{ background: 'rgba(245,158,11,0.1)' }}>
+                <FileCheck style={{ width: 24, height: 24, color: '#F59E0B' }} />
               </div>
-              <div className="io-box-desc">AI 구조화 + XAI 이상탐지<br />+ HITL 인간 승인</div>
+              <h3 style={{ color: '#fff' }}>품질관리이사 (CQO)의 수치심</h3>
+              <p>"원청사 기습 실사라도 뜨면 파편화된 엑셀을 모으느라 밤을 샙니다. 숫자가 조금만 안 맞아도 데이터 조작 의심을 받고 벤더 탈락 위기에 처합니다."</p>
             </div>
-
-            <div className="io-arrow">→</div>
-
-            <div className="io-box io-output">
-              <div className="io-box-title" style={{ color: '#22C55E' }}>OUTPUT</div>
-              <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginBottom: 12 }}>
-                <Database style={{ width: 20, height: 20, color: '#22C55E' }} />
-                <BarChart3 style={{ width: 20, height: 20, color: '#22C55E' }} />
+            <div className="feature-card" style={{ borderColor: 'rgba(59,130,246,0.2)' }}>
+              <div className="feature-icon-box" style={{ background: 'rgba(59,130,246,0.1)' }}>
+                <Briefcase style={{ width: 24, height: 24, color: '#3B82F6' }} />
               </div>
-              <div className="io-box-desc">ERP 자동 동기화<br />감사 리포트 · ROI 대시보드</div>
+              <h3 style={{ color: '#fff' }}>재무이사 (CFO)의 회의감</h3>
+              <p>"과거 수억 원을 들인 스마트공장 구축이 실패한 경험이 있습니다. 장밋빛 AI에 또 예산을 낭비하고 싶지 않으며, 명확한 비용 절감 근거가 필요합니다."</p>
             </div>
           </div>
         </FadeSection>
       </section>
 
-      {/* ════════════ FEATURE CARDS (Benefit-oriented) ════════════ */}
+      {/* ════════════ FEATURE CARDS (Core Solutions) ════════════ */}
       <section className="landing-section section-dark">
         <FadeSection>
-          <p className="section-subtitle" style={{ marginBottom: 0, marginTop: 0, fontWeight: 600, color: '#4ECDC4', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Core Benefits</p>
+          <p className="section-subtitle" style={{ marginBottom: 0, marginTop: 0, fontWeight: 600, color: '#4ECDC4', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.08em' }}>The FactoryAI Solution</p>
           <h2 className="section-title" style={{ marginTop: 12 }}>
-            기능이 아닌, 결과를 말합니다
+            압도적 기술력으로 '입력 노동'을 해고하십시오
           </h2>
           <p className="section-subtitle">
-            FactoryAI가 제공하는 것은 소프트웨어가 아니라, 측정 가능한 변화입니다.
+            기존 스마트공장 키오스크의 실패를 반복하지 마세요.
           </p>
 
           <div className="feature-grid">
-            {/* Card 1 */}
             <div className="feature-card">
               <div className="feature-icon-box" style={{ background: 'rgba(59,130,246,0.1)' }}>
                 <Mic style={{ width: 24, height: 24, color: '#3B82F6' }} />
               </div>
-              <h3>말하면 기록됩니다</h3>
-              <p>작업자가 말하거나 카메라 앞에 서기만 하면 AI가 데이터를 자동으로 구조화합니다. 클립보드와 수기 작성이 사라집니다.</p>
-              <div className="feature-stat"><Zap style={{ width: 14, height: 14 }} /> 데이터 입력 시간 95% 감소</div>
+              <h3>장갑 벗을 필요 없는 패시브 로깅</h3>
+              <p>현장 소음을 뚫는 STT와 Vision AI로 작업자의 수동 터치 없이 공정 상태를 100% 디지털화합니다.</p>
+              <div className="feature-stat"><Zap style={{ width: 14, height: 14 }} /> 현장 입력 거부감 0%</div>
             </div>
 
-            {/* Card 2 */}
             <div className="feature-card">
               <div className="feature-icon-box" style={{ background: 'rgba(78,205,196,0.1)' }}>
-                <Eye style={{ width: 24, height: 24, color: '#4ECDC4' }} />
+                <FileCheck style={{ width: 24, height: 24, color: '#4ECDC4' }} />
               </div>
-              <h3>불량을 미리 잡습니다</h3>
-              <p>XAI(설명 가능 AI) 이상탐지가 불량 징후를 사전에 포착하고, 왜 이상인지 근거를 함께 보여줍니다.</p>
-              <div className="feature-stat"><CheckCircle2 style={{ width: 14, height: 14 }} /> 불량 탐지 정확도 99.8%</div>
+              <h3>원청사 실사 완벽 방어 (10초 PDF)</h3>
+              <p>파편화된 Lot 데이터를 시간순 병합. 글로벌 벤더가 요구하는 Traceability 증빙 리포트를 원클릭 추출합니다.</p>
+              <div className="feature-stat"><CheckCircle2 style={{ width: 14, height: 14 }} /> 품질 감사 밤샘 90% 단축</div>
             </div>
 
-            {/* Card 3 */}
             <div className="feature-card">
               <div className="feature-icon-box" style={{ background: 'rgba(245,158,11,0.1)' }}>
-                <Shield style={{ width: 24, height: 24, color: '#F59E0B' }} />
+                <Activity style={{ width: 24, height: 24, color: '#F59E0B' }} />
               </div>
-              <h3>AI가 마음대로 못 합니다</h3>
-              <p>모든 AI 판단은 반드시 사람의 승인을 거쳐야 합니다. "AI 단독 실행 0건" 원칙으로 현장의 안전을 보장합니다.</p>
-              <div className="feature-stat"><Lock style={{ width: 14, height: 14 }} /> HITL 승인 프로토콜 적용</div>
+              <h3>스케줄러 의존 리스크(SPOF) 파괴</h3>
+              <p>특정 숙련자의 머릿속 노하우를 시스템화하여, 누가 담당해도 공정이 차질 없이 돌아가는 연속성을 확보합니다.</p>
+              <div className="feature-stat"><TrendingUp style={{ width: 14, height: 14 }} /> 납기 지연 리스크 원천 차단</div>
             </div>
 
-            {/* Card 4 */}
             <div className="feature-card">
               <div className="feature-icon-box" style={{ background: 'rgba(34,197,94,0.1)' }}>
-                <Database style={{ width: 24, height: 24, color: '#22C55E' }} />
+                <Briefcase style={{ width: 24, height: 24, color: '#22C55E' }} />
               </div>
-              <h3>기존 ERP 그대로 씁니다</h3>
-              <p>SAP, Oracle 등 기존 ERP 시스템을 교체하지 않습니다. 비파괴형 브릿지로 옆에서 데이터만 동기화합니다.</p>
-              <div className="feature-stat"><Activity style={{ width: 14, height: 14 }} /> ERP 교체 비용 0원</div>
+              <h3>CFO를 위한 바우처 행정 턴키 대행</h3>
+              <p>정부 예산 활용 컨설팅부터 복잡한 서류 작업까지 100% 대행. 초기 도입 자부담을 최대 80% 감축합니다.</p>
+              <div className="feature-stat"><BarChart3 style={{ width: 14, height: 14 }} /> 결재 저항 제거 및 즉각 ROI 산출</div>
             </div>
 
-            {/* Card 5 */}
-            <div className="feature-card">
-              <div className="feature-icon-box" style={{ background: 'rgba(239,68,68,0.1)' }}>
-                <FileText style={{ width: 24, height: 24, color: '#EF4444' }} />
-              </div>
-              <h3>감사는 원클릭으로 끝</h3>
-              <p>로트별 데이터를 자동으로 취합해 PDF 감사 리포트를 생성합니다. 수주 감사 준비에 걸리는 시간이 90% 줄어듭니다.</p>
-              <div className="feature-stat"><Clock style={{ width: 14, height: 14 }} /> 리포트 생성 3분 → 5초</div>
-            </div>
-
-            {/* Card 6 */}
             <div className="feature-card">
               <div className="feature-icon-box" style={{ background: 'rgba(168,85,247,0.1)' }}>
-                <BarChart3 style={{ width: 24, height: 24, color: '#A855F7' }} />
+                <Database style={{ width: 24, height: 24, color: '#A855F7' }} />
               </div>
-              <h3>도입 효과를 숫자로 증명</h3>
-              <p>내장 ROI 계산기로 도입 비용 대비 절감액을 실시간 산출합니다. CFO를 위한 결재 근거가 자동 생성됩니다.</p>
-              <div className="feature-stat"><TrendingUp style={{ width: 14, height: 14 }} /> 평균 ROI 680%</div>
+              <h3>비파괴형 레거시(ERP) 브릿지</h3>
+              <p>기존 영림원/더존 ERP 데이터베이스를 파괴하지 않고, Read-Only 커넥터와 Excel Batch로 가볍게 덧붙여 작동합니다.</p>
+              <div className="feature-stat"><ArrowRight style={{ width: 14, height: 14 }} /> 도입 실패 매몰 비용 제로</div>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-box" style={{ background: 'rgba(239,68,68,0.1)' }}>
+                <Lock style={{ width: 24, height: 24, color: '#EF4444' }} />
+              </div>
+              <h3>극도의 보안, 완벽한 통제권</h3>
+              <p>CISO의 우려를 씻어내는 망 분리 원칙 준수. 외부 클라우드 유출 없이 완벽한 온프레미스 제어가 가능합니다.</p>
+              <div className="feature-stat"><Shield style={{ width: 14, height: 14 }} /> 핵심 노하우 유출 방어 100%</div>
             </div>
           </div>
         </FadeSection>
@@ -271,17 +238,17 @@ export default function Landing() {
       <section className="landing-section section-darker">
         <FadeSection>
           <p className="section-subtitle" style={{ marginBottom: 0, marginTop: 0, fontWeight: 600, color: '#4ECDC4', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Before &amp; After</p>
-          <h2 className="section-title" style={{ marginTop: 12 }}>도입 전후, 숫자가 말합니다</h2>
+          <h2 className="section-title" style={{ marginTop: 12 }}>스마트공장의 '착각'에서 벗어나십시오</h2>
 
           <div className="comparison-grid">
             <div className="comparison-card comparison-before">
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#EF4444', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Before</div>
-              <div className="comparison-value" style={{ color: '#EF4444' }}>4.5%</div>
-              <div className="comparison-label">평균 불량률</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#EF4444', textTransform: 'uppercase', letterSpacing: '0.05em' }}>기존 스마트공장</div>
+              <div className="comparison-value" style={{ color: '#EF4444', fontSize: '28px' }}>데이터 무덤</div>
+              <div className="comparison-label">기초 수준 고착률 75.5%</div>
               <div className="comparison-items">
-                <div className="comparison-item"><AlertTriangle style={{ width: 14, height: 14, color: '#EF4444' }} /> 수기 기록 → 누락 빈번</div>
-                <div className="comparison-item"><AlertTriangle style={{ width: 14, height: 14, color: '#EF4444' }} /> 감사 준비 2~3주 소요</div>
-                <div className="comparison-item"><AlertTriangle style={{ width: 14, height: 14, color: '#EF4444' }} /> ERP 이중 입력 필수</div>
+                <div className="comparison-item"><AlertTriangle style={{ width: 14, height: 14, color: '#EF4444' }} /> 작업자가 키오스크 입력을 거부함</div>
+                <div className="comparison-item"><AlertTriangle style={{ width: 14, height: 14, color: '#EF4444' }} /> 감사 전날, 엑셀을 밤새워 수기 조작함</div>
+                <div className="comparison-item"><AlertTriangle style={{ width: 14, height: 14, color: '#EF4444' }} /> 담당자 퇴사 시 시스템 전체가 멈춤</div>
               </div>
             </div>
 
@@ -291,61 +258,13 @@ export default function Landing() {
             </div>
 
             <div className="comparison-card comparison-after">
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#4ECDC4', textTransform: 'uppercase', letterSpacing: '0.05em' }}>After</div>
-              <div className="comparison-value" style={{ color: '#4ECDC4' }}>0.5%</div>
-              <div className="comparison-label">평균 불량률</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#4ECDC4', textTransform: 'uppercase', letterSpacing: '0.05em' }}>FactoryAI 브릿지</div>
+              <div className="comparison-value" style={{ color: '#4ECDC4', fontSize: '28px' }}>생산 무중단</div>
+              <div className="comparison-label">벤더 탈락 리스크 제로</div>
               <div className="comparison-items">
-                <div className="comparison-item"><CheckCircle2 style={{ width: 14, height: 14, color: '#4ECDC4' }} /> 제로터치 자동 로깅</div>
-                <div className="comparison-item"><CheckCircle2 style={{ width: 14, height: 14, color: '#4ECDC4' }} /> 원클릭 감사 리포트 (5초)</div>
-                <div className="comparison-item"><CheckCircle2 style={{ width: 14, height: 14, color: '#4ECDC4' }} /> 비파괴형 ERP 동기화</div>
-              </div>
-            </div>
-          </div>
-        </FadeSection>
-      </section>
-
-      {/* ════════════ SAFETY & TRUST ════════════ */}
-      <section className="landing-section section-dark">
-        <FadeSection>
-          <p className="section-subtitle" style={{ marginBottom: 0, marginTop: 0, fontWeight: 600, color: '#4ECDC4', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Safety &amp; Trust</p>
-          <h2 className="section-title" style={{ marginTop: 12 }}>제조 현장의 불안을 제거합니다</h2>
-          <p className="section-subtitle">AI 도입이 두려우신가요? FactoryAI는 처음부터 '안전'을 위해 설계되었습니다.</p>
-
-          <div className="trust-grid">
-            <div className="trust-item">
-              <div className="trust-icon" style={{ background: 'rgba(78,205,196,0.1)' }}>
-                <Shield style={{ width: 20, height: 20, color: '#4ECDC4' }} />
-              </div>
-              <div>
-                <h4>AI 단독 실행 0건</h4>
-                <p>모든 AI 결과는 사람이 최종 승인</p>
-              </div>
-            </div>
-            <div className="trust-item">
-              <div className="trust-icon" style={{ background: 'rgba(59,130,246,0.1)' }}>
-                <Eye style={{ width: 20, height: 20, color: '#3B82F6' }} />
-              </div>
-              <div>
-                <h4>XAI 설명 가능 AI</h4>
-                <p>이상 판단 근거를 투명하게 제시</p>
-              </div>
-            </div>
-            <div className="trust-item">
-              <div className="trust-icon" style={{ background: 'rgba(245,158,11,0.1)' }}>
-                <Lock style={{ width: 20, height: 20, color: '#F59E0B' }} />
-              </div>
-              <div>
-                <h4>역할 기반 접근 통제</h4>
-                <p>5단계 RBAC 권한 분리</p>
-              </div>
-            </div>
-            <div className="trust-item">
-              <div className="trust-icon" style={{ background: 'rgba(34,197,94,0.1)' }}>
-                <Database style={{ width: 20, height: 20, color: '#22C55E' }} />
-              </div>
-              <div>
-                <h4>비파괴형 ERP 연동</h4>
-                <p>기존 시스템을 전혀 수정하지 않음</p>
+                <div className="comparison-item"><CheckCircle2 style={{ width: 14, height: 14, color: '#4ECDC4' }} /> 음성/카메라 패시브 로깅 (무입력)</div>
+                <div className="comparison-item"><CheckCircle2 style={{ width: 14, height: 14, color: '#4ECDC4' }} /> 조작 불가능한 10초 감사 PDF 자동 생성</div>
+                <div className="comparison-item"><CheckCircle2 style={{ width: 14, height: 14, color: '#4ECDC4' }} /> 특정인 의존 없는 시스템 스케줄링</div>
               </div>
             </div>
           </div>
@@ -355,28 +274,36 @@ export default function Landing() {
       {/* ════════════ FINAL CTA ════════════ */}
       <section className="final-cta-section">
         <FadeSection>
-          <h2 className="section-title">지금 바로 체험해 보세요</h2>
+          <h2 className="section-title">즉각적인 구원을 경험하십시오</h2>
           <p className="section-subtitle" style={{ marginBottom: 0 }}>
-            설치 없이, 비용 없이. 브라우저에서 바로 FactoryAI의<br />
-            실제 대시보드를 체험하실 수 있습니다.
+            수기 입력의 굴레와 벤더 감사의 공포에서 지금 바로 벗어나세요.<br />
+            정부 예산이 소진되기 전에 도입 상담을 시작하십시오.
           </p>
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginTop: 40, flexWrap: 'wrap' }}>
-            <button className="cta-primary" onClick={goLogin}>
-              무료 데모 시작하기
-              <ArrowRight style={{ width: 18, height: 18 }} />
+            <button className="cta-primary" onClick={goLogin} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px 32px' }}>
+              <span style={{ fontSize: '18px', fontWeight: 'bold' }}>Traceability 무상 진단 데모</span>
+              <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.8, marginTop: '4px' }}>10초 PDF 생성 체험하기</span>
+            </button>
+            <button className="cta-secondary" onClick={() => navigate('/roi-calculator')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px 32px' }}>
+              <span style={{ fontSize: '18px', fontWeight: 'bold' }}>B2B ROI 시뮬레이션 진단</span>
+              <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.8, marginTop: '4px' }}>맞춤형 야근 절감/바우처 확인</span>
+            </button>
+            <button className="cta-secondary" onClick={goLogin} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px 32px', borderColor: '#F59E0B', color: '#F59E0B' }}>
+              <span style={{ fontSize: '18px', fontWeight: 'bold' }}>정부 바우처 턴키 예약</span>
+              <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.8, marginTop: '4px' }}>행정 서류 100% 무상 대행 (선착순)</span>
             </button>
           </div>
-          <p style={{ marginTop: 20, fontSize: 13, color: '#475569' }}>
-            가입 불필요 · 즉시 체험 · 5가지 역할별 데모
+          <p style={{ marginTop: 24, fontSize: 13, color: '#475569' }}>
+            중소기업 AI 도입 컨설팅 전문 · 제조 AX 정부 지원금 사업 수행기관
           </p>
         </FadeSection>
       </section>
 
       {/* ════════════ FOOTER ════════════ */}
       <footer className="landing-footer">
-        <p>© 2026 FactoryAI — 중소 제조공장을 위한 AI 기반 생산관리 SaaS</p>
+        <p>© 2026 FactoryAI — 제조업 Traceability AI 브릿지 솔루션</p>
         <p style={{ marginTop: 8, fontSize: 12, color: '#334155' }}>
-          "AI 단독 실행 0건" 원칙 기반 HITL 시스템
+          수기 입력 제로화 및 원청사 감사 방어를 위한 AI 자동화 SaaS
         </p>
       </footer>
     </div>
