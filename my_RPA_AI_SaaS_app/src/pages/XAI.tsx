@@ -22,19 +22,20 @@ import {
   BarChart2,
   CheckCircle
 } from 'lucide-react'
+import { PageHeader } from '@/components/ui/PageHeader'
 
 export default function XAI() {
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">XAI 품질 이상탐지</h1>
-          <p className="text-slate-400">AI가 판단한 이상 징후의 근거를 확인하고 품질을 관리합니다.</p>
-        </div>
-        <Button variant="mint" size="sm">
-          분석 모델 업데이트
-        </Button>
-      </div>
+      <PageHeader 
+        title="XAI 품질 이상탐지" 
+        description="AI가 판단한 이상 징후의 근거를 확인하고 품질을 관리합니다."
+        actions={
+          <Button variant="mint" size="sm">
+            분석 모델 업데이트
+          </Button>
+        }
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Analysis Card */}

@@ -26,6 +26,7 @@ import {
   UserCheck,
   Globe
 } from 'lucide-react'
+import { PageHeader } from '@/components/ui/PageHeader'
 
 const securityStats = [
   { label: '보안 점수', value: '98/100', status: 'excellent', icon: ShieldCheck, color: 'text-success' },
@@ -52,20 +53,20 @@ const threatLevels = [
 export default function Security() {
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-white">보안 콘솔</h1>
-          <p className="text-slate-400">시스템 보안 상태 모니터링 및 액세스 제어를 관리합니다.</p>
-        </div>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" className="border-slate-800 text-slate-300">
-            <Fingerprint className="w-4 h-4 mr-2" /> 인증 설정
-          </Button>
-          <Button variant="destructive">
-            <Lock className="w-4 h-4 mr-2" /> 긴급 락다운
-          </Button>
-        </div>
-      </div>
+      <PageHeader 
+        title="보안 콘솔" 
+        description="시스템 보안 상태 모니터링 및 액세스 제어를 관리합니다."
+        actions={
+          <>
+            <Button variant="outline" className="border-slate-800 text-slate-300">
+              <Fingerprint className="w-4 h-4 mr-2" /> 인증 설정
+            </Button>
+            <Button variant="destructive">
+              <Lock className="w-4 h-4 mr-2" /> 긴급 락다운
+            </Button>
+          </>
+        }
+      />
 
       {/* Security Overview Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

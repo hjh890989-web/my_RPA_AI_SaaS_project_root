@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CheckCircle2, Circle, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { PageHeader } from '@/components/ui/PageHeader'
 
 const steps = [
   { id: 1, title: '회사 정보 설정', description: '사업자 등록번호 및 공장 위치 정보 입력', status: 'completed' },
@@ -24,10 +25,10 @@ const steps = [
 export default function Onboarding() {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-white">시스템 온보딩 가이드</h1>
-        <p className="text-slate-400">FactoryAI 도입을 위한 5단계 설정 프로세스입니다.</p>
-      </div>
+      <PageHeader 
+        title="시스템 온보딩 가이드" 
+        description="FactoryAI 도입을 위한 5단계 설정 프로세스입니다."
+      />
 
       <div className="space-y-4">
         {steps.map((step) => (

@@ -25,6 +25,9 @@ import {
   Activity,
   CheckCircle2
 } from 'lucide-react'
+import { PageHeader } from '@/components/ui/PageHeader'
+import { StatCard } from '@/components/ui/StatCard'
+import { ProgressBar } from '@/components/ui/ProgressBar'
 
 const kpiStats = [
   { label: '종합 설비 효율 (OEE)', value: '88.4%', change: '+2.1%', trend: 'up', icon: Activity, color: 'text-info' },
@@ -43,41 +46,25 @@ const performanceGoals = [
 export default function Performance() {
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-white">성과 분석 대시보드</h1>
-          <p className="text-slate-400">공장 전체의 생산성 및 품질 KPI 달성 현황입니다.</p>
-        </div>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" className="border-slate-800 text-slate-300">
-            리포트 내보내기
-          </Button>
-          <Button variant="mint">
-            데이터 갱신
-          </Button>
-        </div>
-      </div>
+      <PageHeader 
+        title="성과 분석 대시보드" 
+        description="공장 전체의 생산성 및 품질 KPI 달성 현황입니다."
+        actions={
+          <>
+            <Button variant="outline" className="border-slate-800 text-slate-300">
+              리포트 내보내기
+            </Button>
+            <Button variant="mint">
+              데이터 갱신
+            </Button>
+          </>
+        }
+      />
 
       {/* KPI Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpiStats.map((stat) => (
-          <Card key={stat.label}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className={`p-2 rounded-lg bg-slate-800 ${stat.color}`}>
-                  <stat.icon className="w-5 h-5" />
-                </div>
-                <div className={`flex items-center text-xs font-bold ${stat.trend === 'up' ? 'text-success' : 'text-critical'}`}>
-                  {stat.trend === 'up' ? <ArrowUpRight className="w-3 h-3 mr-1" /> : <ArrowDownRight className="w-3 h-3 mr-1" />}
-                  {stat.change}
-                </div>
-              </div>
-              <div className="mt-4">
-                <p className="text-sm font-medium text-slate-500">{stat.label}</p>
-                <h3 className="text-2xl font-bold text-white mt-1">{stat.value}</h3>
-              </div>
-            </CardContent>
-          </Card>
+          <StatCard key={stat.label} {...stat} change={`${stat.trend === 'up' ? '+' : ''}${stat.change.replace('+', '')}`} />
         ))}
       </div>
 
@@ -138,13 +125,11 @@ export default function Performance() {
             <CardContent className="space-y-6">
               {performanceGoals.map((goal) => (
                 <div key={goal.name} className="space-y-2">
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-sm mb-2">
                     <span className="text-slate-300">{goal.name}</span>
                     <span className="text-slate-500 text-xs">Target: {goal.target}</span>
                   </div>
-                  <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                    <div className={`h-full ${goal.color} transition-all duration-1000`} style={{ width: `${goal.progress}%` }} />
-                  </div>
+                  <ProgressBar value={goal.progress} colorClass={goal.color} />
                   <div className="flex justify-end">
                     <span className="text-[10px] font-bold text-white">{goal.progress}%</span>
                   </div>

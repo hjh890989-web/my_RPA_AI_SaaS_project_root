@@ -30,6 +30,7 @@ import {
   History
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useAuth } from '../context/AuthContext'
 
 /** 기본 네비게이션 메뉴 항목. 모든 역할에게 표시됩니다. */
 const navigation = [
@@ -53,10 +54,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
-  const userRole = localStorage.getItem('userRole') || 'VIEWER'
+  const { userRole, logout } = useAuth()
 
   const handleLogout = () => {
-    localStorage.removeItem('userRole')
+    logout()
     navigate('/login')
   }
 

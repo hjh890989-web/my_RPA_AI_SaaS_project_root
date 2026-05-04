@@ -25,6 +25,7 @@ import {
   Clock,
   FileWarning
 } from 'lucide-react'
+import { PageHeader } from '@/components/ui/PageHeader'
 
 const reports = [
   { id: 'REP-2026-04-A', title: '4월 3주차 품질 감사 리포트', type: 'WEEKLY', status: 'READY', date: '2026-04-21', auditor: '클레어 리' },
@@ -36,15 +37,15 @@ export default function AuditReports() {
   const navigate = useNavigate()
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">감사 리포트</h1>
-          <p className="text-slate-400">품질 감사 및 AI 분석 결과 보고서를 관리하고 PDF로 발행합니다.</p>
-        </div>
-        <Button variant="mint" size="sm">
-          <FileText className="w-4 h-4 mr-2" /> 신규 리포트 생성
-        </Button>
-      </div>
+      <PageHeader 
+        title="감사 리포트" 
+        description="품질 감사 및 AI 분석 결과 보고서를 관리하고 PDF로 발행합니다."
+        actions={
+          <Button variant="mint" size="sm">
+            <FileText className="w-4 h-4 mr-2" /> 신규 리포트 생성
+          </Button>
+        }
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="p-4 bg-slate-900/50 border-slate-800">

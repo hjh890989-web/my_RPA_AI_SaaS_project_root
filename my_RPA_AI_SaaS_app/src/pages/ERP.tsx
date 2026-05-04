@@ -23,6 +23,7 @@ import {
   ArrowRightLeft,
   FileSpreadsheet
 } from 'lucide-react'
+import { PageHeader } from '@/components/ui/PageHeader'
 
 const erpConnections = [
   { id: 'sap-01', name: 'SAP S/4HANA', type: 'Main ERP', status: 'connected', lastSync: '10분 전', syncRate: '99.9%' },
@@ -48,20 +49,20 @@ const syncLogs = [
 export default function ERP() {
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-white">ERP 연동 관리</h1>
-          <p className="text-slate-400">외부 ERP 시스템과의 데이터 동기화 및 필드 매핑을 관리합니다.</p>
-        </div>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" className="border-slate-800 text-slate-300">
-            <Settings2 className="w-4 h-4 mr-2" /> 연동 설정
-          </Button>
-          <Button variant="mint">
-            <RefreshCw className="w-4 h-4 mr-2" /> 전체 동기화 실행
-          </Button>
-        </div>
-      </div>
+      <PageHeader 
+        title="ERP 연동 관리" 
+        description="외부 ERP 시스템과의 데이터 동기화 및 필드 매핑을 관리합니다."
+        actions={
+          <>
+            <Button variant="outline" className="border-slate-800 text-slate-300">
+              <Settings2 className="w-4 h-4 mr-2" /> 연동 설정
+            </Button>
+            <Button variant="mint">
+              <RefreshCw className="w-4 h-4 mr-2" /> 전체 동기화 실행
+            </Button>
+          </>
+        }
+      />
 
       {/* Connection Status Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

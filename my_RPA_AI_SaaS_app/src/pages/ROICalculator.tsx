@@ -39,7 +39,7 @@ export default function ROICalculator() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 py-8 px-4">
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-4 mb-8">
         <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-mint/10 text-mint mb-2">
           <Calculator className="w-8 h-8" />
         </div>

@@ -13,6 +13,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Shield, User, Camera, FileSearch, Eye, Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useAuth, UserRole } from '../context/AuthContext'
 
 const roles = [
   { id: 'ADMIN', name: '한성우 COO', icon: Shield, desc: '전체 관리, ERP, 대시보드' },
@@ -24,10 +25,10 @@ const roles = [
 
 export default function Login() {
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleLogin = (role: string) => {
-    // In a real app, we would set the auth state here
-    localStorage.setItem('userRole', role)
+    login(role as UserRole)
     navigate('/dashboard')
   }
 

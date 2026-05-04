@@ -15,20 +15,18 @@ import React, { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { 
   Mic, 
   Video, 
   FileSpreadsheet, 
-  Search, 
   Filter,
-  CheckCircle,
-  XCircle,
-  AlertCircle,
   Loader2,
   ArrowRight
 } from 'lucide-react'
 import { useNavigate, Link } from 'react-router-dom'
+import { PageHeader } from '@/components/ui/PageHeader'
+import { ProgressBar } from '@/components/ui/ProgressBar'
+import { StatusBadge } from '@/components/ui/StatusBadge'
 
 const mockLogs = [
   { id: 'LOG-001', type: 'STT', source: '공정 A - 용접부', content: '용접 온도 1,250도 유지 확인, 노즐 교체 필요...', status: 'AI_ANALYZING', time: '14:20:15' },
@@ -43,20 +41,20 @@ export default function LogEntries() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">제로터치 로깅</h1>
-          <p className="text-slate-400">음성, 카메라, 엑셀 데이터를 AI가 실시간으로 구조화합니다.</p>
-        </div>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" size="sm" className="border-slate-800">
-            <Filter className="w-4 h-4 mr-2" /> 필터
-          </Button>
-          <Button variant="mint" size="sm" onClick={() => navigate('/log-entries/review')}>
-            검토 대기중 (12) <ArrowRight className="ml-2 w-4 h-4" />
-          </Button>
-        </div>
-      </div>
+      <PageHeader 
+        title="제로터치 로깅" 
+        description="음성, 카메라, 엑셀 데이터를 AI가 실시간으로 구조화합니다."
+        actions={
+          <>
+            <Button variant="outline" size="sm" className="border-slate-800">
+              <Filter className="w-4 h-4 mr-2" /> 필터
+            </Button>
+            <Button variant="mint" size="sm" onClick={() => navigate('/log-entries/review')}>
+              검토 대기중 (12) <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </>
+        }
+      />
 
       {/* Input Methods */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -101,11 +99,9 @@ export default function LogEntries() {
           <Loader2 className="w-4 h-4 text-mint animate-spin" />
           <span className="text-sm font-medium text-slate-300">AI가 3개의 신규 데이터를 분석 중입니다...</span>
         </div>
-        <div className="flex items-center space-x-2">
-          <div className="h-1.5 w-32 bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-mint w-2/3 animate-pulse" />
-          </div>
-          <span className="text-[10px] font-mono text-slate-500">67%</span>
+        <div className="flex items-center space-x-2 w-40">
+          <ProgressBar value={67} colorClass="bg-mint" className="flex-1" />
+          <span className="text-[10px] font-mono text-slate-500 whitespace-nowrap ml-2">67%</span>
         </div>
       </div>
 
@@ -154,13 +150,7 @@ export default function LogEntries() {
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Badge variant={
-                    log.status === 'APPROVED' ? 'success' :
-                    log.status === 'PENDING_REVIEW' ? 'warning' : 'info'
-                  }>
-                    {log.status === 'APPROVED' ? '승인완료' :
-                     log.status === 'PENDING_REVIEW' ? '검토대기' : '분석중'}
-                  </Badge>
+                  <StatusBadge status={log.status} />
                   {log.status === 'PENDING_REVIEW' && (
                     <Button variant="ghost" size="sm" className="h-8 px-2 text-mint hover:text-mint hover:bg-mint/10" onClick={() => navigate('/log-entries/review')}>
                       검토 <ArrowRight className="ml-1 w-3 h-3" />

@@ -27,6 +27,7 @@ import {
   ChevronRight,
   ShieldCheck
 } from 'lucide-react'
+import { PageHeader } from '@/components/ui/PageHeader'
 
 const pendingItems = [
   {
@@ -63,26 +64,28 @@ export default function LogReview() {
   const navigate = useNavigate()
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-slate-400 hover:text-white"
-            onClick={() => navigate(-1)}
-          >
-            <ChevronLeft className="w-4 h-4 mr-1" /> 목록으로
-          </Button>
-          <h1 className="text-2xl font-bold text-white">HITL 인간 승인</h1>
-        </div>
-        <div className="flex items-center space-x-2 text-sm text-slate-500">
-          <span className="font-mono">Page 1 of 12</span>
-          <div className="flex space-x-1">
-            <Button variant="outline" size="icon" className="h-8 w-8 border-slate-800"><ChevronLeft className="w-4 h-4" /></Button>
-            <Button variant="outline" size="icon" className="h-8 w-8 border-slate-800"><ChevronRight className="w-4 h-4" /></Button>
+        <PageHeader 
+        title="HITL 인간 승인" 
+        actions={
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 text-sm text-slate-500">
+              <span className="font-mono">Page 1 of 12</span>
+              <div className="flex space-x-1">
+                <Button variant="outline" size="icon" className="h-8 w-8 border-slate-800"><ChevronLeft className="w-4 h-4" /></Button>
+                <Button variant="outline" size="icon" className="h-8 w-8 border-slate-800"><ChevronRight className="w-4 h-4" /></Button>
+              </div>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-slate-400 hover:text-white"
+              onClick={() => navigate(-1)}
+            >
+              <ChevronLeft className="w-4 h-4 mr-1" /> 목록으로
+            </Button>
           </div>
-        </div>
-      </div>
+        }
+      />
 
       <div className="grid grid-cols-1 gap-6">
         {pendingItems.map((item) => (

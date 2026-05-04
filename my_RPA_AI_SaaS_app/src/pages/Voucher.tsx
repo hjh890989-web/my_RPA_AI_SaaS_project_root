@@ -14,6 +14,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Wallet, FileText, CheckCircle2, Clock, AlertCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { PageHeader } from '@/components/ui/PageHeader'
+import { ProgressBar } from '@/components/ui/ProgressBar'
 
 const voucherSteps = [
   { id: 'DRAFT', label: '임시저장', date: '2026-04-10' },
@@ -29,10 +31,10 @@ export default function Voucher() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-white">정부 바우처 관리</h1>
-        <p className="text-slate-400">스마트공장 보급확산 사업 지원금 및 집행 현황입니다.</p>
-      </div>
+      <PageHeader 
+        title="정부 바우처 관리" 
+        description="스마트공장 보급확산 사업 지원금 및 집행 현황입니다."
+      />
 
       {/* Stepper */}
       <Card>
@@ -87,13 +89,11 @@ export default function Voucher() {
             </div>
 
             <div className="space-y-2">
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-sm mb-2">
                 <span className="text-slate-400">바우처 소진율</span>
                 <span className="text-white">45%</span>
               </div>
-              <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
-                <div className="h-full bg-mint w-[45%]" />
-              </div>
+              <ProgressBar value={45} colorClass="bg-mint" />
             </div>
 
             <div className="flex items-center p-4 rounded-lg bg-info/10 border border-info/20 text-info text-sm">

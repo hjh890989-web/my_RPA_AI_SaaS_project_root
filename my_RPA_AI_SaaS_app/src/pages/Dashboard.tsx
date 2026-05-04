@@ -14,11 +14,15 @@
  */
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { TrendingUp, AlertCircle, CheckCircle2, Clock, Activity, Mic, Video, Database, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { PageHeader } from '@/components/ui/PageHeader'
+import { StatCard } from '@/components/ui/StatCard'
+import { StatusBadge } from '@/components/ui/StatusBadge'
+import { ProgressBar } from '@/components/ui/ProgressBar'
 
 const stats = [
   { label: '오늘의 로그', value: '1,284', change: '+12.5%', icon: Activity, color: 'text-info' },
@@ -34,44 +38,30 @@ const recentLogs = [
 ]
 
 export default function Dashboard() {
-  const userRole = localStorage.getItem('userRole') || 'VIEWER'
+  const { userRole } = useAuth()
+  const displayRole = userRole || 'VIEWER'
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-white">현장 운영 대시보드</h1>
-          <p className="text-slate-400">실시간 데이터 수집 및 AI 구조화 현황입니다.</p>
-        </div>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" className="border-slate-800 text-slate-300">
-            기간 설정
-          </Button>
-          <Button variant="mint">
-            새 로그 생성
-          </Button>
-        </div>
-      </div>
+      <PageHeader 
+        title="현장 운영 대시보드" 
+        description="실시간 데이터 수집 및 AI 구조화 현황입니다."
+        actions={
+          <>
+            <Button variant="outline" className="border-slate-800 text-slate-300">
+              기간 설정
+            </Button>
+            <Button variant="mint">
+              새 로그 생성
+            </Button>
+          </>
+        }
+      />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
-          <Card key={stat.label}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className={cn("p-2 rounded-lg bg-slate-800/50", stat.color)}>
-                  <stat.icon className="w-5 h-5" />
-                </div>
-                <Badge variant={stat.change.startsWith('+') ? 'success' : stat.change.startsWith('-') ? 'warning' : 'destructive'}>
-                  {stat.change}
-                </Badge>
-              </div>
-              <div className="mt-4">
-                <p className="text-sm font-medium text-slate-500">{stat.label}</p>
-                <h3 className="text-2xl font-bold text-white mt-1">{stat.value}</h3>
-              </div>
-            </CardContent>
-          </Card>
+          <StatCard key={stat.label} {...stat} />
         ))}
       </div>
 
@@ -103,9 +93,7 @@ export default function Dashboard() {
                       <p className="text-xs text-slate-500">{log.type} • {log.time}</p>
                     </div>
                   </div>
-                  <Badge variant={log.status === 'completed' ? 'success' : log.status === 'pending' ? 'warning' : 'info'}>
-                    {log.status === 'completed' ? '완료' : log.status === 'pending' ? '검토중' : 'AI 분석중'}
-                  </Badge>
+                  <StatusBadge status={log.status} />
                 </Link>
               ))}
             </div>
@@ -123,9 +111,7 @@ export default function Dashboard() {
                 <span className="text-slate-400">AI 모델 가동률</span>
                 <span className="text-white font-medium">94%</span>
               </div>
-              <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                <div className="h-full bg-mint w-[94%]" />
-              </div>
+              <ProgressBar value={94} colorClass="bg-mint" />
             </div>
             
             <div className="space-y-2">
@@ -133,9 +119,7 @@ export default function Dashboard() {
                 <span className="text-slate-400">ERP 동기화 상태</span>
                 <span className="text-success font-medium">정상</span>
               </div>
-              <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                <div className="h-full bg-success w-full" />
-              </div>
+              <ProgressBar value={100} colorClass="bg-success" />
             </div>
 
             <div className="pt-4 border-t border-slate-800">

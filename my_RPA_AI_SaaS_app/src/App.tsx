@@ -13,20 +13,39 @@
  * @see Layout.tsx — 사이드바 및 헤더 렌더링
  * @see Login.tsx — 역할 기반 Quick Login
  */
+import React, { Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import LogEntries from './pages/LogEntries'
-import LogReview from './pages/LogReview'
-import AuditReports from './pages/AuditReports'
-import XAI from './pages/XAI'
-import ERP from './pages/ERP'
-import Security from './pages/Security'
-import Performance from './pages/Performance'
-import ROICalculator from './pages/ROICalculator'
-import Onboarding from './pages/Onboarding'
-import Voucher from './pages/Voucher'
+import { ProtectedRoute } from './components/ProtectedRoute'
+
+// Code Splitting for Pages
+const Landing = lazy(() => import('./pages/Landing'))
+const Login = lazy(() => import('./pages/Login'))
+const Dashboard = lazy(() => import('./pages/Dashboard'))
+const LogEntries = lazy(() => import('./pages/LogEntries'))
+const LogReview = lazy(() => import('./pages/LogReview'))
+const AuditReports = lazy(() => import('./pages/AuditReports'))
+const XAI = lazy(() => import('./pages/XAI'))
+const ERP = lazy(() => import('./pages/ERP'))
+const Security = lazy(() => import('./pages/Security'))
+const Performance = lazy(() => import('./pages/Performance'))
+const ROICalculator = lazy(() => import('./pages/ROICalculator'))
+const Onboarding = lazy(() => import('./pages/Onboarding'))
+const Voucher = lazy(() => import('./pages/Voucher'))
+
+/**
+ * Fallback UI while lazy-loaded components are fetching
+ */
+function PageLoader() {
+  return (
+    <div className="flex h-[100vh] w-full items-center justify-center bg-slate-950">
+      <div className="flex flex-col items-center space-y-4">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-800 border-t-mint"></div>
+        <p className="text-sm text-slate-400">Loading...</p>
+      </div>
+    </div>
+  )
+}
 
 /**
  * 애플리케이션 루트 컴포넌트.
@@ -38,24 +57,27 @@ import Voucher from './pages/Voucher'
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        
-        {/* Protected Routes */}
-        <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
-        <Route path="/dashboard/xai" element={<Layout><XAI /></Layout>} />
-        <Route path="/dashboard/erp" element={<Layout><ERP /></Layout>} />
-        <Route path="/dashboard/security" element={<Layout><Security /></Layout>} />
-        <Route path="/dashboard/performance" element={<Layout><Performance /></Layout>} />
-        <Route path="/roi-calculator" element={<Layout><ROICalculator /></Layout>} />
-        <Route path="/log-entries" element={<Layout><LogEntries /></Layout>} />
-        <Route path="/log-entries/review" element={<Layout><LogReview /></Layout>} />
-        <Route path="/audit-reports" element={<Layout><AuditReports /></Layout>} />
-        <Route path="/admin/onboarding" element={<Layout><Onboarding /></Layout>} />
-        <Route path="/admin/voucher" element={<Layout><Voucher /></Layout>} />
-        
-        <Route path="/" element={<Navigate to="/login" replace />} />
-      </Routes>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Landing Page — 고객 Hook 단계 (최전면) */}
+          <Route path="/" element={<Landing />} />
+          
+          <Route path="/login" element={<Login />} />
+          
+          {/* Protected Routes */}
+          <Route path="/dashboard" element={<ProtectedRoute><Layout><Dashboard /></Layout></ProtectedRoute>} />
+          <Route path="/dashboard/xai" element={<ProtectedRoute><Layout><XAI /></Layout></ProtectedRoute>} />
+          <Route path="/dashboard/erp" element={<ProtectedRoute><Layout><ERP /></Layout></ProtectedRoute>} />
+          <Route path="/dashboard/security" element={<ProtectedRoute><Layout><Security /></Layout></ProtectedRoute>} />
+          <Route path="/dashboard/performance" element={<ProtectedRoute><Layout><Performance /></Layout></ProtectedRoute>} />
+          <Route path="/roi-calculator" element={<ProtectedRoute><Layout><ROICalculator /></Layout></ProtectedRoute>} />
+          <Route path="/log-entries" element={<ProtectedRoute><Layout><LogEntries /></Layout></ProtectedRoute>} />
+          <Route path="/log-entries/review" element={<ProtectedRoute><Layout><LogReview /></Layout></ProtectedRoute>} />
+          <Route path="/audit-reports" element={<ProtectedRoute><Layout><AuditReports /></Layout></ProtectedRoute>} />
+          <Route path="/admin/onboarding" element={<ProtectedRoute><Layout><Onboarding /></Layout></ProtectedRoute>} />
+          <Route path="/admin/voucher" element={<ProtectedRoute><Layout><Voucher /></Layout></ProtectedRoute>} />
+        </Routes>
+      </Suspense>
     </Router>
   )
 }
