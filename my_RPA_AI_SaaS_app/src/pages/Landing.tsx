@@ -50,8 +50,23 @@ function Navbar({ onCTA }: { onCTA: () => void }) {
 
   return (
     <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
-      <div className="nav-logo" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} style={{cursor: 'pointer'}}>
-        Factory<span style={{ color: '#EF4444' }}>Rescue</span>
+      <div className="nav-logo" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} style={{cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px'}}>
+        <div style={{ 
+          width: '64px', 
+          height: '64px', 
+          backgroundColor: '#ffffff', 
+          borderRadius: '12px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          overflow: 'hidden',
+          boxShadow: '0 0 15px rgba(255,255,255,0.1)'
+        }}>
+          <img src="/assets/logo_icon_small.png" alt="FactoryRescue" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        </div>
+        <span style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '-0.02em', color: '#fff' }}>
+          Factory<span style={{ color: '#EF4444' }}>Rescue</span>
+        </span>
       </div>
       <div className="nav-links">
         <button onClick={() => scrollTo('features')}>기능 소개</button>
@@ -90,7 +105,18 @@ export default function Landing() {
             업무 과다 및 조업 중단 위기 대응 전담 솔루션
           </div>
 
-          <h1 className="landing-headline" style={{ marginTop: 28 }}>
+          <div style={{ marginTop: 32, marginBottom: 16, display: 'flex', justifyContent: 'center' }}>
+            <video 
+              src="/assets/logo_animation.mp4" 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'contain', filter: 'drop-shadow(0 0 20px rgba(78, 205, 196, 0.2))' }}
+            />
+          </div>
+
+          <h1 className="landing-headline" style={{ marginTop: 16 }}>
             지금 <span style={{ color: '#EF4444' }}>엑셀</span>을 사용하고 계십니까?<br /> 그러면 당신은 <span style={{ color: '#EF4444' }}>구조대상</span>입니다.
           </h1>
 
@@ -637,7 +663,22 @@ export default function Landing() {
       </section>
 
       {/* ════════════ FOOTER ════════════ */}
-      <footer className="landing-footer" style={{ borderTopColor: 'rgba(239,68,68,0.1)' }}>
+      <footer className="landing-footer" style={{ borderTopColor: 'rgba(239,68,68,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '80px 24px' }}>
+        <div style={{ 
+          height: '80px', 
+          width: 'auto',
+          minWidth: '200px',
+          backgroundColor: '#ffffff', 
+          borderRadius: '16px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          marginBottom: '32px',
+          padding: '0 40px',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.6)'
+        }}>
+          <img src="/assets/logo_white_small.png" alt="FactoryRescue Logo" style={{ height: '65%', width: 'auto', objectFit: 'contain' }} />
+        </div>
         <p>© 2026 FactoryRescue — 위기에 빠진 중소·중견 제조 현장 전담 구조 솔루션</p>
         <p style={{ marginTop: 8, fontSize: 12, color: '#ef4444', opacity: 0.6 }}>
           수기 입력 제로화 및 원청사 감사 방어를 위한 긴급 대응 SaaS
