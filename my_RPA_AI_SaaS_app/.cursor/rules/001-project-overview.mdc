@@ -1,0 +1,38 @@
+---
+description: FactoryAI 프로젝트 비전·페르소나·KPI (모든 대화 강제 주입)
+alwaysApply: true
+---
+
+# FactoryAI — Project Overview (Cursor Always-On)
+
+> **상세**: [.agents/rules/001-project-overview.md](mdc:.agents/rules/001-project-overview.md)에 전체 정의. 본 파일은 Cursor용 압축 버전.
+
+## Vision
+국내 스마트공장 75.5%가 정체된 **「2차 자동화 공백」** 해소. 4대 해법: Zero-Touch 패시브 로깅 / 비파괴형 ERP 브릿지 / 온프레미스 AI / 턴키 바우처 대행.
+
+## Scope (MVP)
+- **버티컬**: 금속가공·식품제조 2개
+- **PoC**: 1개 고객사, 동시 사용자 ≤3명
+- **개발**: 1인 + 완전 무료 인프라
+
+## Epic 매핑 (FR-XXX 인용 시 사용)
+- E1 패시브 로깅 (STT+Vision)
+- E2 감사 리포트 (Lot Merge + 클라이언트 PDF)
+- E2-B 품질 XAI 이상탐지
+- E3 ERP 비파괴형 브릿지 (Mock MVP)
+- E4 CFO ROI 진단·결재
+- E6 온프레미스 보안 패키지
+- E7 성과 대시보드
+
+## DMU 공략 순서 (절대)
+COO(챔피언) → CFO+품질이사(검증) → **CISO(도장, 단독 거부권)**
+
+## 작업 시작 시
+1. 해당 기능의 SRS §4 (FR-XXX) ID 인용
+2. 영향받는 페르소나 식별
+3. HITL 영향도 평가 ([004-hitl-and-security.mdc](mdc:.cursor/rules/004-hitl-and-security.mdc) 참조)
+
+## See also
+- [002-tech-stack.mdc](mdc:.cursor/rules/002-tech-stack.mdc)
+- [003-development-guidelines.mdc](mdc:.cursor/rules/003-development-guidelines.mdc)
+- [004-hitl-and-security.mdc](mdc:.cursor/rules/004-hitl-and-security.mdc)

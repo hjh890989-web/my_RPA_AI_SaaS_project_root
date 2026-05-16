@@ -1,0 +1,43 @@
+---
+description: FactoryAI 기술 스택 — Next.js App Router 풀스택 모놀리스 (Cursor Always-On)
+alwaysApply: true
+---
+
+# Technical Stack — Next.js Fullstack Monolith
+
+> **상세**: [.agents/rules/002-tech-stack.md](mdc:.agents/rules/002-tech-stack.md)
+
+## 핵심 스택 (MVP)
+- **Framework**: Next.js 15+ App Router (TypeScript strict)
+- **Server**: Server Actions + Route Handlers (**별도 백엔드 없음** — CON-11)
+- **UI**: shadcn/ui + Tailwind CSS (CON-10)
+- **DB**: Prisma ORM, SQLite(dev) / Supabase PostgreSQL(MVP) — CON-09
+- **AI**: Vercel AI SDK + Gemini API (Free Tier 15 RPM) — CON-08
+- **Deploy**: Vercel Free (Git Push 자동) — CON-04
+- **PDF**: 클라이언트 사이드 (`@react-pdf/renderer` / `window.print()`) — CON-07
+- **ERP**: Supabase 내 Mock 테이블 (Read-Only) — CON-02
+
+## 절대 금지
+| 금지 | 이유 |
+|:---|:---|
+| Java/Spring Boot/Gradle | Next.js Server Actions로 대체 |
+| Kafka/RabbitMQ | MVP 시나리오에 불필요 |
+| Flutter/React Native | MVP 모바일 없음 |
+| FastAPI/Django/Express | 별도 백엔드 금지 (CON-11) |
+| Redis | Vercel 환경 부적합 |
+| MySQL | Prisma + PostgreSQL/SQLite 전용 |
+| Docker (MVP) | Phase 2까지 보류 |
+| OpenAI/HuggingFace | Gemini 단일 (CON-08) |
+| LangChain | Vercel AI SDK 표준 |
+
+## 폴더 구조
+```
+app/         # Next.js App Router (route groups, layouts)
+components/  # ui/ (shadcn) + features/
+lib/         # prisma.ts, ai/, rbac.ts, utils.ts
+prisma/      # schema.prisma, migrations, seed
+docs/        # PRD/SRS/ADR
+tests/       # Vitest
+```
+
+**경로 별칭**: `@/*` → 프로젝트 루트.

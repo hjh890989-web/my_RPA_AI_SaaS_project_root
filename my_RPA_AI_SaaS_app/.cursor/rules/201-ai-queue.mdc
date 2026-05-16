@@ -1,0 +1,81 @@
+---
+description: AI/LLM 호출 코드 작업 시 강제 — Gemini는 aiQueue.enqueue() 경유, HITL PENDING_APPROVAL 패턴
+globs: ["lib/ai/**/*", "app/**/explain/**/*", "app/**/ai/**/*", "app/api/v1/**/*"]
+alwaysApply: false
+---
+
+# AI Queue & HITL Rules — Surgical
+
+## 절대 규칙
+1. **모든 Gemini 호출은 `aiQueue.enqueue()` 경유** (CON-12). 직접 `generateText/streamText/generateObject` 호출 금지.
+2. **AI 결과는 `status: 'PENDING_APPROVAL'`로만 저장** (CON-03 / R1).
+3. **모든 AI 액션 후 `auditLog.create()` 호출** (R4). `actor: 'ai-<model>-<version>'`.
+4. **XAI**: reason(한국어) + topFeatures(3+) + confidence(0~1) 노출 의무.
+
+## 표준 import
+```ts
+import { aiQueue } from '@/lib/ai/queue'
+import { google } from '@ai-sdk/google'
+import { generateText, generateObject } from 'ai'
+import { z } from 'zod'
+import { prisma } from '@/lib/prisma'
+import { requireRole } from '@/lib/rbac'
+```
+
+## 골격 패턴
+```ts
+'use server'
+export async function detectAnomaly(lotId: string) {
+  const session = await requireRole(['ADMIN', 'QC'])
+
+  const features = await getLotFeatures(lotId)
+  const explanation = await aiQueue.enqueue(() =>
+    generateObject({ model: google('gemini-1.5-flash'), schema: XaiSchema, prompt: prompt(features) })
+  )
+
+  const suggestion = await prisma.aiSuggestion.create({
+    data: {
+      type: 'ANOMALY',
+      inputRef: lotId,
+      decision: explanation.decision,
+      explanation: explanation.reason,
+      topFeatures: explanation.topFeatures,
+      confidence: explanation.confidence,
+      status: 'PENDING_APPROVAL',  // ⭐ 강제
+      modelVersion: 'gemini-1.5-flash@2026-05',
+    },
+  })
+
+  await prisma.auditLog.create({
+    data: {
+      actor: 'ai-gemini-1.5-flash',
+      action: 'AUTO_FLAG',
+      targetType: 'AiSuggestion',
+      targetId: suggestion.id,
+      after: suggestion,
+      confidence: explanation.confidence,
+    },
+  })
+
+  return suggestion
+}
+```
+
+## 금지 패턴
+```ts
+// ❌ 큐 우회
+const { text } = await generateText({...})
+
+// ❌ AI 결과를 PENDING 없이 production 테이블에 저장
+await prisma.invoice.create({ data: aiResult })
+
+// ❌ AI 결과를 사람 승인 없이 외부 발행
+await sendEmail(aiResult.summary)
+```
+
+## 관련 자료
+- `.agents/skills/302-gemini-throttle/SKILL.md`
+- `.agents/skills/305-vercel-ai-sdk-rules/SKILL.md`
+- `.agents/skills/306-hitl-safety-rules/SKILL.md`
+- `.gemini/agents/vercel-ai-gemini.md`
+- `.claude/agents/ai-integration.md`

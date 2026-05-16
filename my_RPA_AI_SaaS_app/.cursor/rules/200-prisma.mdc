@@ -1,0 +1,46 @@
+---
+description: Prisma 스키마·마이그레이션·시드 파일 작업 시 강제 — 네이밍, Index, ERP Read-Only, audit_log 표준
+globs: ["prisma/**/*", "**/*.prisma", "lib/db.ts", "lib/erp/**/*"]
+alwaysApply: false
+---
+
+# Prisma — Schema & Migration Rules
+
+## 네이밍
+| 대상 | 규칙 | 예 |
+|---|---|---|
+| Model | PascalCase 단수 | `AuditReport` |
+| 테이블 | snake_case 복수 + `@@map` | `@@map("audit_reports")` |
+| ERP Model | `Erp` prefix | `ErpInventory` |
+| ID | `String @id @default(cuid())` | — |
+| Timestamp | `createdAt`, `updatedAt` | — |
+| Soft delete | `deletedAt DateTime?` | — |
+
+## 필수 모델 (Phase 1 핵심)
+- `AiSuggestion` — HITL R1 (PENDING_APPROVAL 패턴)
+- `AuditLog` — R4 (모든 mutation 기록)
+- `User` + RBAC `role` enum (`ADMIN | OPERATOR | QC | CISO | VIEWER`)
+- `ErpInventory`, `ErpOrder`, `ErpProductionResult` — Mock ERP (ASM-02)
+
+## ERP 모델 강제
+- `Erp` prefix 모델은 **별도 Prisma 클라이언트** + Read-Only 미들웨어 적용 (`lib/erp/middleware.ts`)
+- 직접 write 호출 금지 (`.agents/skills/301-erp-readonly-guard` 참조)
+- Seed 시에만 예외 (`prisma/seed.ts`에서 일반 prisma 사용)
+
+## Migration 명령
+```bash
+npx prisma migrate dev --name <descriptive-name>   # dev
+npx prisma migrate deploy                          # MVP/PROD
+npx prisma generate                                 # 타입 재생성
+npx prisma format                                   # 스키마 정렬
+```
+
+## Index 룰
+- 자주 조회되는 컬럼 조합에 `@@index([col1, col2])`
+- 외래키 자동 인덱스
+- AuditLog: `@@index([actor, createdAt])`, `@@index([targetType, targetId])`
+- AiSuggestion: `@@index([status, createdAt])`
+
+## 무료 티어 의식
+- Supabase Free DB 500MB — JSON 컬럼은 신중하게
+- 1년 audit_log 추정 후 적정 — 부족하면 Phase 2 cold storage 계획

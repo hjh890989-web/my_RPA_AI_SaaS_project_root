@@ -1,0 +1,72 @@
+---
+description: HITL 4대 원칙 + RBAC + ERP Read-Only — 보안 영향 파일 작업 시 강제
+globs: ["app/**/*.ts", "app/**/*.tsx", "lib/**/*.ts", "prisma/**/*.prisma", "app/api/**/*"]
+alwaysApply: true
+---
+
+# HITL · RBAC · Data Protection — 위반 시 PR 거절
+
+> **상세**: [.agents/rules/004-hitl-and-security.md](mdc:.agents/rules/004-hitl-and-security.md)
+
+## 1. HITL 4대 원칙 (CON-03)
+
+### ① AI 단독 외부 발행·물리 행위 금지
+모든 AI 결과는 `status: 'PENDING_APPROVAL'` → 사용자 명시 Approve → `'APPROVED'` → 외부 효과.
+
+**금지 패턴 예시**:
+```ts
+// ❌ AI 응답 직후 외부 발행
+const result = await ai.generate(...)
+await sendEmail(result.summary)  // HITL 위반
+
+// ✅ 승인 대기 큐에 저장
+const result = await ai.generate(...)
+await db.aiSuggestion.create({ data: { ...result, status: 'PENDING_APPROVAL' }})
+```
+
+### ② 수동 판단 모드 즉시 전환 (≤5분)
+AI 정확도 임계치 미달 시 5분 내 수동 모드 전환, 30분 후 자동 복귀.
+
+### ③ 한국어 XAI 설명 의무
+이상 탐지 결과는 신뢰도 + 핵심 feature 3개 + 한국어 설명 노출.
+
+### ④ 모든 AI 판단 → `audit_log`
+`actor`, `action`, `target`, `before/after`, `confidence`, `ip`, `created_at` 기록.
+
+## 2. ERP Read-Only 다층 방어 (CON-02)
+
+ERP 관련 모델에 대해 **3중 방어**:
+- Layer 1: 별도 Prisma 데이터소스 (Read-Only DB user)
+- Layer 2: Prisma Middleware로 `create/update/delete/upsert/updateMany/deleteMany` 차단
+- Layer 3: DB 사용자 권한 자체 SELECT only
+
+**위반 코드**:
+```ts
+// ❌ 절대 금지
+await erpPrisma.erpInventory.update({ where: ..., data: ... })
+// → 빌드 실패 또는 런타임 ERP_WRITE_FORBIDDEN throw
+```
+
+## 3. RBAC 5개 역할
+
+`ADMIN | OPERATOR | QC | CISO | VIEWER`
+
+모든 Server Action / Route Handler 첫 줄:
+```ts
+const session = await requireRole(['ADMIN', 'OPERATOR'])
+```
+
+가드 누락 시 PR reject.
+
+## 4. 데이터 보호 빠른 체크리스트
+
+- [ ] 모든 입력에 Zod 검증
+- [ ] `NEXT_PUBLIC_*` 외 비밀키 서버 전용
+- [ ] PII는 로그·Sentry에 마스킹 (`홍**`)
+- [ ] `$queryRawUnsafe` 사용 0건
+- [ ] `dangerouslySetInnerHTML` 사용 시 리뷰
+- [ ] 파일 업로드 ≤10MB + MIME whitelist
+- [ ] users.deleted_at 기반 soft delete
+
+## See also
+- [.cursor/skills/100-error-fixing-process/SKILL.md](mdc:.cursor/skills/100-error-fixing-process/SKILL.md) — HITL 위반 사고 시 절차

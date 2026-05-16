@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "_comment": "Cursor lifecycle hooks. Windows 환경에서는 .ps1 또는 .bat 사용. 본 파일은 템플릿 — 필요 시 사용자가 활성화.",
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "_comment": "파괴적 git 명령(force push, reset --hard) 사전 차단",
+        "command": "node .cursor/hooks/check-destructive-git.cjs",
+        "_enabled": false
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "_comment": "Prisma 스키마 편집 후 자동 format",
+        "match": ["**/*.prisma"],
+        "command": "npx prisma format",
+        "_enabled": false
+      },
+      {
+        "_comment": "Server Action / Route Handler 편집 후 RBAC 가드 누락 경고",
+        "match": ["app/**/actions.ts", "app/api/**/route.ts"],
+        "command": "node .cursor/hooks/check-rbac-guard.cjs",
+        "_enabled": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+# 외부 skills 마켓플레이스 (project 무관)
+/skills/
+
+# 환경변수
+.env.local
+.env.*.local
+
+# node
+node_modules/
+.next/
+dist/
+.vite/
+.turbo/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp

@@ -1,0 +1,54 @@
+---
+description: FactoryAI 코드 스타일·아키텍처 원칙 — TS/React/Next 파일 작업 시 강제
+globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+alwaysApply: false
+---
+
+# Development Guidelines — TypeScript/React/Next
+
+> **상세**: [.agents/rules/003-development-guidelines.md](mdc:.agents/rules/003-development-guidelines.md)
+
+## TypeScript
+- **Strict** 강제. `any` 금지 (불가피하면 `unknown` 후 narrow).
+- 함수 시그니처: 반환 타입 명시 (export되는 함수).
+- 객체 모양은 `type`, 클래스 계약은 `interface`.
+
+## React / Next.js
+- 함수형 컴포넌트만. `class` 금지.
+- **Server Component 기본**, `'use client'`는 인터랙션 경계에서만.
+- `const` 화살표 함수 선호.
+- Early return으로 중첩 줄이기.
+- 이벤트 핸들러 `handleXxx` prefix.
+
+## Tailwind / shadcn/ui
+- Tailwind 클래스 전용. 인라인 `style` / 별도 CSS 금지.
+- 조건부 클래스: `clsx` 또는 `cn()`. 삼항 지양.
+
+## 명명 규칙
+| 대상 | 규칙 |
+|:---|:---|
+| 컴포넌트 | PascalCase (`LotMergeButton.tsx`) |
+| 훅 | `use` + camelCase (`useAuditReport`) |
+| 상수 | UPPER_SNAKE (`MAX_PDF_PAGES`) |
+| API 라우트 | kebab-case (`audit-reports/route.ts`) |
+| Prisma 모델 | PascalCase 단수 (`AuditReport`) |
+| DB 테이블 | snake_case via `@@map` |
+
+## Architecture
+- **단일 모놀리스**: 비즈니스 로직은 Server Action 또는 Route Handler.
+- **서버/클라이언트 경계**: DB·LLM 호출은 서버. 비밀키는 `NEXT_PUBLIC_*` 외 서버 전용.
+- **Gemini 호출**: 반드시 `lib/ai/queue.ts` 큐 경유 (Rate Limit). 직접 호출 금지.
+- **Error**: 시스템 경계에서만 try/catch. 내부 신뢰.
+
+## 주석
+- WHY만 작성, 한 줄 원칙.
+- TODO: `// TODO(#42): ...`.
+- 변경 이력 주석 금지 (Git이 관리).
+
+## 우선순위 (충돌 시)
+1. Accuracy (재무·감사 계산 결함 0)
+2. Compliance (정부 양식 100%)
+3. User Safety (Auto-save <10s)
+4. Security (HITL/RBAC/Read-Only ERP)
+5. Performance (NFR)
+6. DX
